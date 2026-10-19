@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Bazaar</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f8f5ff;
+    color: #302344;
+}
+
+header {
+    background: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    box-shadow: 0 2px 8px #ddd;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+    color: #6d28d9;
+}
+
+nav a {
+    text-decoration: none;
+    color: #302344;
+    margin: 8px;
+    font-weight: bold;
+}
+
+.hero {
+    background: #e9ddff;
+    text-align: center;
+    padding: 55px 15px;
+}
+
+.hero h1 {
+    font-size: 36px;
+}
+
+.search {
+    text-align: center;
+    padding: 25px 10px;
+}
+
+#searchBox {
+    width: 80%;
+    max-width: 500px;
+    padding: 14px;
+    border: 2px solid #a78bfa;
+    border-radius: 25px;
+    font-size: 16px;
+}
+
+h2 {
+    text-align: center;
+}
+
+.books {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 20px;
+    padding: 25px;
+}
+
+.book {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 3px 10px #ddd;
+}
+
+.cover {
+    background: #ede9fe;
+    padding: 25px;
+    font-size: 55px;
+    border-radius: 10px;
+}
+
+.price {
+    color: #6d28d9;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+button {
+    background: #6d28d9;
+    color: white;
+    border: none;
+    padding: 11px;
+    margin: 5px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+footer {
+    background: #302344;
+    color: white;
+    text-align: center;
+    padding: 25px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">📚 Book Bazaar</div>
+    ```html
+<nav>
+    <a href="index.html">Home</a>
+    <a href="books.html">All Books</a>
+    <a href="semester.html">Semester Books</a>
+    <a href="exchange.html">Book Exchange</a>
+    <a href="student-tools.html">Student Tools</a>
+    <a href="wishlist.html">❤️ Wishlist</a>
+    <a href="cart.html">🛒 Cart</a>
+    <a href="login.html">Login</a>
+</nav>
+```
+
+</header>
+
+<section class="hero">
+    <h1>THE STUDENT BOOK MARKETPLACE</h1>
+    <p>Discover books, save money, and find your next favourite read!</p>
+    <a href="#bookSection">
+        <button>Explore Books</button>
+    </a>
+</section>
+
+<div class="search">
+    <input
+        id="searchBox"
+        type="text"
+        placeholder="🔍 Search by book title or author..."
+        oninput="searchBooks()"
+    >
+</div>
+
+<h2 id="bookSection">📚 Popular Books</h2>
+
+<div class="books" id="books">
+
+    <div class="book">
+        <div class="cover">🧙</div>
+        <h3>Harry Potter and the Philosopher's Stone</h3>
+        <p>J. K. Rowling</p>
+        <p class="price">₹299</p>
+        <button onclick="addToCart(1)">Add to Cart</button>
+        <button onclick="addToWishlist(1)">♡ Wishlist</button>
+    </div>
+
+    <div class="book">
+        <div class="cover">🌟</div>
+        <h3>The Alchemist</h3>
+        <p>Paulo Coelho</p>
+        <p class="price">₹199</p>
+        <button onclick="addToCart(2)">Add to Cart</button>
+        <button onclick="addToWishlist(2)">♡ Wishlist</button>
+    </div>
+
+    <div class="book">
+        <div class="cover">🧠</div>
+        <h3>Atomic Habits</h3>
+        <p>James Clear</p>
+        <p class="price">₹349</p>
+        <button onclick="addToCart(3)">Add to Cart</button>
+        <button onclick="addToWishlist(3)">♡ Wishlist</button>
+    </div>
+
+    <div class="book">
+        <div class="cover">💰</div>
+        <h3>Rich Dad Poor Dad</h3>
+        <p>Robert T. Kiyosaki</p>
+        <p class="price">₹249</p>
+        <button onclick="addToCart(4)">Add to Cart</button>
+        <button onclick="addToWishlist(4)">♡ Wishlist</button>
+    </div>
+
+    <div class="book">
+        <div class="cover">💻</div>
+        <h3>Python Crash Course</h3>
+        <p>Eric Matthes</p>
+        <p class="price">₹499</p>
+        <button onclick="addToCart(5)">Add to Cart</button>
+        <button onclick="addToWishlist(5)">♡ Wishlist</button>
+    </div>
+
+    <div class="book">
+        <div class="cover">🚀</div>
+        <h3>A Brief History of Time</h3>
+        <p>Stephen Hawking</p>
+        <p class="price">₹299</p>
+        <button onclick="addToCart(6)">Add to Cart</button>
+        <button onclick="addToWishlist(6)">♡ Wishlist</button>
+    </div>
+
+</div>
+
+<footer>
+    <h3>📚 Book Bazaar</h3>
+    <p>The Student Book Marketplace</p>
+    <p>Made for students, by students.</p>
+    <p>© 2026 Book Bazaar
+
+ function addToWishlist(id) {
+    const books = {
+        1: {title: "Harry Potter and the Philosopher's Stone", price: 299},
+        2: {title: "The Alchemist", price: 199},
+        3: {title: "Atomic Habits", price: 349},
+        4: {title: "Rich Dad Poor Dad", price: 249},
+        5: {title: "Python Crash Course", price: 499},
+        6: {title: "A Brief History of Time", price: 299}
+    };
+
+    const book = books[id];
+
+    if (!book) {
+        alert("Book not found!");
+        return;
+    }
+
+    let wishlist = [];
+
+    try {
+        wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+    } catch (error) {
+        wishlist = [];
+    }
+
+    if (wishlist.some(item => Number(item.id) === Number(id))) {
+        alert("This book is already in your wishlist! ❤️");
+        return;
+    }
+
+    wishlist.push({
+        id: Number(id),
+        title: book.title,
+        price: book.price
+    });
+
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+
+    alert(book.title + " added to your wishlist! ❤️");
+}
+
+
+</script>
+```html
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const books = {
+        1: { title: "Harry Potter and the Philosopher's Stone", price: 299 },
+        2: { title: "The Alchemist", price: 199 },
+        3: { title: "Atomic Habits", price: 349 },
+        4: { title: "Rich Dad Poor Dad", price: 249 },
+        5: { title: "Python Crash Course", price: 499 },
+        6: { title: "A Brief History of Time", price: 299 }
+    };
+
+    function readStorage(key) {
+        try {
+            const data = JSON.parse(localStorage.getItem(key));
+            return Array.isArray(data) ? data : [];
+        } catch (error) {
+            return [];
+        }
+    }
+
+    window.addToCart = function (id) {
+        const book = books[id];
+
+        if (!book) {
+            alert("Book not found. Please refresh the homepage.");
+            return;
+        }
+
+        const cart = readStorage("cart");
+        const existing = cart.find(item => Number(item.id) === Number(id));
+
+        if (existing) {
+            existing.quantity = (Number(existing.quantity) || 1) + 1;
+        } else {
+            cart.push({
+                id: Number(id),
+                title: book.title,
+                price: book.price,
+                quantity: 1
+            });
+        }
+
+        try {
+            localStorage.setItem("cart", JSON.stringify(cart));
+            alert(book.title + " added to your cart! 🛒");
+        } catch (error) {
+            alert("Your browser could not save the cart. Please try again.");
+        }
+    };
+
+    window.addToWishlist = function (id) {
+        const book = books[id];
+
+        if (!book) {
+            alert("Book not found. Please refresh the homepage.");
+            return;
+        }
+
+        const wishlist = readStorage("wishlist");
+
+        if (wishlist.some(item => Number(item.id) === Number(id))) {
+            alert("This book is already in your wishlist! ❤️");
+            return;
+        }
+
+        wishlist.push({
+            id: Number(id),
+            title: book.title,
+            price: book.price
+        });
+
+        try {
+            localStorage.setItem("wishlist", JSON.stringify(wishlist));
+            alert(book.title + " added to your wishlist! ❤️");
+        } catch (error) {
+            alert("Your browser could not save the wishlist. Please try again.");
+        }
+    };
+
+});
+</script>
+
+
+</body>
+</html>
