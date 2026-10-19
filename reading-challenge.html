@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Challenge | Book Bazaar</title>
+    <link rel="stylesheet" href="style.css">
+
+```
+<style>
+    .challenge-page {
+        max-width: 1000px;
+        margin: 30px auto;
+        padding: 20px;
+    }
+
+    .challenge-hero {
+        background: linear-gradient(135deg, #087f8c, #35b8a5);
+        color: white;
+        text-align: center;
+        padding: 40px 20px;
+        border-radius: 20px;
+    }
+
+    .challenge-hero .icon {
+        font-size: 60px;
+    }
+
+    .challenge-layout {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 22px;
+        margin-top: 25px;
+    }
+
+    .challenge-card {
+        background: white;
+        border-radius: 15px;
+        padding: 24px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    }
+
+    .challenge-card label {
+        display: block;
+        font-weight: bold;
+        margin: 15px 0 7px;
+    }
+
+    .challenge-card input,
+    .challenge-card select {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 15px;
+    }
+
+    .challenge-button {
+        background: #087f8c;
+        color: white;
+        border: none;
+        padding: 12px 18px;
+        border-radius: 8px;
+        margin-top: 18px;
+        cursor: pointer;
+        font-size: 15px;
+    }
+
+    .challenge-button:hover {
+        background: #05636d;
+    }
+
+    .progress-track {
+        width: 100%;
+        height: 18px;
+        background: #e7eeee;
+        border-radius: 20px;
+        overflow: hidden;
+        margin: 18px 0;
+    }
+
+    .progress-fill {
+        width: 0%;
+        height: 100%;
+        background: #35b8a5;
+        transition: width 0.3s ease;
+    }
+
+    .progress-number {
+        font-size: 30px;
+        font-weight: bold;
+        color: #087f8c;
+    }
+
+    .challenge-message {
+        padding: 13px;
+        background: #e9faf6;
+        border-radius: 9px;
+        margin-top: 15px;
+    }
+
+    .challenge-list {
+        padding-left: 20px;
+        line-height: 2;
+    }
+
+    .challenge-note {
+        color: #666;
+        font-size: 14px;
+        margin-top: 22px;
+    }
+
+    .challenge-back {
+        display: inline-block;
+        margin: 25px 0;
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+<header>
+    <h2>📚 Book Bazaar</h2>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="index.html#books">Books</a>
+        <a href="student-tools.html">Student Tools</a>
+        <a href="book-match.html">Book Match</a>
+        <a href="wishlist.html">Wishlist</a>
+        <a href="cart.html">Cart</a>
+    </nav>
+</header>
+
+<main class="challenge-page">
+
+```
+<section class="challenge-hero">
+    <div class="icon">🏆📖</div>
+    <h1>Reading Challenge</h1>
+    <p>Build a reading habit, one page at a time!</p>
+    <p>Set a goal, record your books and celebrate your progress.</p>
+</section>
+
+<section class="challenge-layout">
+
+    <article class="challenge-card">
+        <h2>🎯 Set Your Goal</h2>
+        <p>Choose how many books you want to read.</p>
+
+        <form id="goalForm">
+            <label for="goal">Number of books</label>
+            <input
+                type="number"
+                id="goal"
+                min="1"
+                max="1000"
+                value="5"
+                required
+            >
+
+            <button class="challenge-button" type="submit">
+                Save Reading Goal
+            </button>
+        </form>
+    </article>
+
+    <article class="challenge-card">
+        <h2>📈 Your Progress</h2>
+        <p>Books completed:</p>
+
+        <div class="progress-number" id="completedCount">0</div>
+
+        <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <p id="progressText">0% completed</p>
+
+        <div class="challenge-message" id="progressMessage">
+            Start reading and add your first completed book!
+        </div>
+    </article>
+
+</section>
+
+<section class="challenge-card" style="margin-top:25px;">
+    <h2>📚 Add a Completed Book</h2>
+
+    <form id="bookForm">
+        <label for="bookTitle">Book Title</label>
+        <input
+            type="text"
+            id="bookTitle"
+            placeholder="Enter the book title"
+            required
+            maxlength="120"
+        >
+
+        <label for="bookCategory">Book Category</label>
+        <select id="bookCategory" required>
+            <option value="Fiction">Fiction</option>
+            <option value="Romance">Romance</option>
+            <option value="Mystery">Mystery & Thriller</option>
+            <option value="Education">Education</option>
+            <option value="Technology">Technology</option>
+            <option value="Self-Improvement">Self-Improvement</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <button class="challenge-button" type="submit">
+            + Add Completed Book
+        </button>
+    </form>
+
+    <h3 style="margin-top:28px;">📖 My Reading List</h3>
+    <ul class="challenge-list" id="readingList"></ul>
+
+    <button class="challenge-button" id="resetButton" type="button">
+        Reset Challenge
+    </button>
+</section>
+
+<p class="challenge-note">
+    Your goal and reading list are stored in this browser on this device.
+    This is a demonstration feature and does not sync across devices.
+</p>
+
+<a class="challenge-back" href="index.html">← Back to Home</a>
+```
+
+</main>
+
+<footer>
+    <p>© 2026 Book Bazaar | Read More, Learn More 📚</p>
+</footer>
+
+<script>
+    const STORAGE_KEY = "bb_reading_challenge";
+
+    let challenge = {
+        goal: 5,
+        books: []
+    };
+
+    function saveChallenge() {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(challenge));
+            return true;
+        } catch (error) {
+            alert("Could not save your progress. Check your browser settings.");
+            return false;
+        }
+    }
+
+    function loadChallenge() {
+        try {
+            const saved = localStorage.getItem(STORAGE_KEY);
+
+            if (saved) {
+                const parsed = JSON.parse(saved);
+
+                if (
+                    parsed &&
+                    Number.isInteger(parsed.goal) &&
+                    parsed.goal >= 1 &&
+                    Array.isArray(parsed.books)
+                ) {
+                    challenge = {
+                        goal: parsed.goal,
+                        books: parsed.books.filter(function(book) {
+                            return book &&
+                                typeof book.title === "string" &&
+                                typeof book.category === "string";
+                        })
+                    };
+                }
+            }
+        } catch (error) {
+            challenge = {
+                goal: 5,
+                books: []
+            };
+        }
+    }
+
+    function renderChallenge() {
+        document.getElementById("goal").value = challenge.goal;
+        document.getElementById("completedCount").textContent =
+            challenge.books.length;
+
+        const percentage = Math.min(
+            100,
+            Math.round((challenge.books.length / challenge.goal) * 100)
+        );
+
+        document.getElementById("progressFill").style.width =
+            percentage + "%";
+
+        document.getElementById("progressText").textContent =
+            percentage + "% completed";
+
+        const progressMessage = document.getElementById("progressMessage");
+
+        if (challenge.books.length >= challenge.goal) {
+            progressMessage.textContent =
+                "🎉 Congratulations! You reached your reading goal!";
+        } else if (challenge.books.length === 0) {
+            progressMessage.textContent =
+                "Start reading and add your first completed book!";
+        } else {
+            progressMessage.textContent =
+                "Great work! Keep going — you are making progress!";
+        }
+
+        const readingList = document.getElementById("readingList");
+        readingList.replaceChildren();
+
+        if (challenge.books.length === 0) {
+            const item = document.createElement("li");
+            item.textContent = "No completed books added yet.";
+            readingList.appendChild(item);
+            return;
+        }
+
+        challenge.books.forEach(function(book, index) {
+            const item = document.createElement("li");
+            const removeButton = document.createElement("button");
+
+            item.appendChild(
+                document.createTextNode(
+                    book.title + " — " + book.category + " "
+                )
+            );
+
+            removeButton.type = "button";
+            removeButton.textContent = "Remove";
+            removeButton.style.marginLeft = "10px";
+
+            removeButton.addEventListener("click", function() {
+                challenge.books.splice(index, 1);
+
+                if (saveChallenge()) {
+                    renderChallenge();
+                }
+            });
+
+            item.appendChild(removeButton);
+            readingList.appendChild(item);
+        });
+    }
+
+    document.getElementById("goalForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const goal = Number(document.getElementById("goal").value);
+
+        if (!Number.isInteger(goal) || goal < 1 || goal > 1000) {
+            alert("Please enter a goal between 1 and 1000 books.");
+            return;
+        }
+
+        challenge.goal = goal;
+
+        if (saveChallenge()) {
+            renderChallenge();
+            alert("Your reading goal has been saved!");
+        }
+    });
+
+    document.getElementById("bookForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const title = document.getElementById("bookTitle").value.trim();
+        const category = document.getElementById("bookCategory").value;
+
+        if (!title) {
+            alert("Please enter a book title.");
+            return;
+        }
+
+        challenge.books.push({
+            title: title,
+            category: category
+        });
+
+        if (saveChallenge()) {
+            document.getElementById("bookForm").reset();
+            renderChallenge();
+        } else {
+            challenge.books.pop();
+        }
+    });
+
+    document.getElementById("resetButton").addEventListener("click", function() {
+        const confirmed = confirm(
+            "Are you sure you want to reset your reading challenge?"
+        );
+
+        if (!confirmed) {
+            return;
+        }
+
+        const oldChallenge = challenge;
+
+        challenge = {
+            goal: 5,
+            books: []
+        };
+
+        if (saveChallenge()) {
+            renderChallenge();
+        } else {
+            challenge = oldChallenge;
+        }
+    });
+
+    loadChallenge();
+    renderChallenge();
+</script>
+
+</body>
+</html>

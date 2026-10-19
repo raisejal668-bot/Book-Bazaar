@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>AI Book Assistant | Book Bazaar</title>
+<link rel="stylesheet" href="style.css">
+
+<style>
+    body {
+        background: #f7f5ff;
+        font-family: Arial, sans-serif;
+    }
+
+    .assistant-page {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 20px;
+    }
+
+    .assistant-hero {
+        padding: 35px 20px;
+        border-radius: 18px;
+        background: linear-gradient(135deg, #e8e0ff, #f3eaff);
+        text-align: center;
+    }
+
+    .assistant-icon {
+        font-size: 55px;
+    }
+
+    .chat-box {
+        background: white;
+        padding: 25px;
+        margin-top: 25px;
+        border-radius: 15px;
+        box-shadow: 0 4px 18px #00000010;
+    }
+
+    .chat-messages {
+        height: 320px;
+        overflow-y: auto;
+        padding: 15px;
+        border: 1px solid #eee;
+        border-radius: 10px;
+        background: #fcfbff;
+    }
+
+    .message {
+        padding: 12px 15px;
+        margin: 10px 0;
+        border-radius: 10px;
+        line-height: 1.6;
+        overflow-wrap: anywhere;
+    }
+
+    .bot-message {
+        background: #eee8ff;
+        margin-right: 35px;
+    }
+
+    .user-message {
+        background: #e4f7e9;
+        margin-left: 35px;
+    }
+
+    .chat-form {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .chat-form input {
+        flex: 1;
+        min-width: 0;
+        padding: 13px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 15px;
+    }
+
+    .chat-form button {
+        padding: 12px 18px;
+        border: none;
+        border-radius: 8px;
+        background: #6c4ce4;
+        color: white;
+        cursor: pointer;
+    }
+
+    .suggestion-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+    }
+
+    .suggestion-buttons button {
+        padding: 10px 14px;
+        background: #f0ebff;
+        border: 1px solid #d9ceff;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+
+    .clear-button {
+        margin-top: 15px;
+        padding: 10px 14px;
+        background: #ffe8e8;
+        color: #a40000;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+    }
+
+    .assistant-note {
+        color: #666;
+        font-size: 13px;
+        line-height: 1.6;
+        margin-top: 18px;
+    }
+
+    @media (max-width: 550px) {
+        .chat-form {
+            flex-direction: column;
+        }
+
+        .bot-message {
+            margin-right: 10px;
+        }
+
+        .user-message {
+            margin-left: 10px;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<header>
+    <nav>
+        <a href="index.html">📚 Book Bazaar</a>
+        <a href="index.html">Home</a>
+        <a href="index.html#books">Books</a>
+        <a href="exchange.html">Exchange</a>
+        <a href="wishlist.html">Wishlist</a>
+        <a href="cart.html">Cart</a>
+    </nav>
+</header>
+
+<main class="assistant-page">
+
+    <section class="assistant-hero">
+        <div class="assistant-icon">🤖📚</div>
+        <h1>AI Book Assistant</h1>
+        <p>Tell us what you want to learn, and discover a book for you!</p>
+    </section>
+
+    <section class="chat-box">
+        <h2>Chat with Book Buddy</h2>
+
+        <div
+            id="chatMessages"
+            class="chat-messages"
+            aria-live="polite"
+            aria-label="Chat conversation"
+        >
+            <div class="message bot-message">
+                <strong>Book Buddy:</strong>
+                Hi! 👋 I'm your Book Bazaar assistant.
+                Ask me for programming books, study tips, fiction,
+                self-help books, or computer science recommendations!
+            </div>
+        </div>
+
+        <div class="suggestion-buttons">
+            <button type="button" data-question="Recommend programming books">
+                💻 Programming
+            </button>
+
+            <button type="button" data-question="Recommend computer science books">
+                🧠 Computer Science
+            </button>
+
+            <button type="button" data-question="Recommend fiction books">
+                📖 Fiction
+            </button>
+
+            <button type="button" data-question="Recommend self help books">
+                🌱 Self Help
+            </button>
+        </div>
+
+        <form id="chatForm" class="chat-form">
+            <input
+                type="text"
+                id="userQuestion"
+                placeholder="Ask me anything about books..."
+                maxlength="300"
+                required
+            >
+
+            <button type="submit">Send ➤</button>
+        </form>
+
+        <button type="button" id="clearChat" class="clear-button">
+            Clear Chat
+        </button>
+
+        <p class="assistant-note">
+            This is a demo assistant that matches keywords to a small
+            collection of books. It does not use a live AI model or
+            an internet connection.
+        </p>
+    </section>
+
+</main>
+
+<script>
+    const assistantBooks = [
+        {
+            title: "Python Programming",
+            author: "Reema Thareja",
+            price: 399,
+            category: "programming",
+            description: "A useful option for learning Python programming."
+        },
+        {
+            title: "Let Us C",
+            author: "Yashavant Kanetkar",
+            price: 350,
+            category: "programming",
+            description: "A popular introductory book for learning C."
+        },
+        {
+            title: "Data Structures",
+            author: "Seymour Lipschutz",
+            price: 450,
+            category: "computer science",
+            description: "Explore data structures and important concepts."
+        },
+        {
+            title: "Computer Networks",
+            author: "Andrew Tanenbaum",
+            price: 499,
+            category: "computer science",
+            description: "Learn about computer networking concepts."
+        },
+        {
+            title: "Database Management",
+            author: "Raghu Ramakrishnan",
+            price: 420,
+            category: "computer science",
+            description: "Explore database systems and their fundamentals."
+        },
+        {
+            title: "Clean Code",
+            author: "Robert C. Martin",
+            price: 550,
+            category: "programming",
+            description: "Learn principles for writing more maintainable code."
+        },
+        {
+            title: "The Alchemist",
+            author: "Paulo Coelho",
+            price: 299,
+            category: "fiction",
+            description: "A fictional journey about dreams and discovery."
+        },
+        {
+            title: "Atomic Habits",
+            author: "James Clear",
+            price: 350,
+            category: "self help",
+            description: "Explore how small habits can shape behaviour."
+        },
+        {
+            title: "Rich Dad Poor Dad",
+            author: "Robert Kiyosaki",
+            price: 320,
+            category: "self help",
+            description: "A book about money, financial thinking, and wealth."
+        },
+        {
+            title: "Artificial Intelligence",
+            author: "Stuart Russell",
+            price: 599,
+            category: "computer science",
+            description: "Explore artificial intelligence concepts."
+        },
+        {
+            title: "Java Programming",
+            author: "Herbert Schildt",
+            price: 450,
+            category: "programming",
+            description: "A reference for learning Java programming."
+        },
+        {
+            title: "Think Like a Monk",
+            author: "Jay Shetty",
+            price: 280,
+            category: "self help",
+            description: "Explore ideas about focus, purpose, and mindset."
+        }
+    ];
+
+    const chatMessages = document.getElementById("chatMessages");
+    const questionInput = document.getElementById("userQuestion");
+
+    function addMessage(text, className) {
+        const message = document.createElement("div");
+        message.className = "message " + className;
+
+        // Use textContent so user input is displayed safely.
+        message.textContent = text;
+
+        chatMessages.appendChild(message);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function recommendBooks(question) {
+        const text = question.toLowerCase();
+
+        if (text.includes("hello") || text.includes("hi ")) {
+            return "Hello! 😊 Tell me what kind of book you want to read.";
+        }
+
+        if (
+            text.includes("programming") ||
+            text.includes("python") ||
+            text.includes("java") ||
+            text.includes("coding") ||
+            text.includes(" c ")
+        ) {
+            return formatRecommendations("programming");
+        }
+
+        if (
+            text.includes("computer science") ||
+            text.includes("data structure") ||
+            text.includes("database") ||
+            text.includes("network") ||
+            text.includes("artificial intelligence") ||
+            text.includes(" ai ")
+        ) {
+            return formatRecommendations("computer science");
+        }
+
+        if (
+            text.includes("fiction") ||
+            text.includes("story") ||
+            text.includes("novel") ||
+            text.includes("adventure")
+        ) {
+            return formatRecommendations("fiction");
+        }
+
+        if (
+            text.includes("self help") ||
+            text.includes("self-help") ||
+            text.includes("habit") ||
+            text.includes("motivation") ||
+            text.includes("mindset")
+        ) {
+            return formatRecommendations("self help");
+        }
+
+        if (text.includes("cheap") || text.includes("budget")) {
+            const affordableBooks = assistantBooks
+                .filter(book => book.price <= 350)
+                .map(book => book.title + " — ₹" + book.price);
+
+            return "Here are some lower-priced options from our demo catalogue:\n" +
+                affordableBooks.join("\n") +
+                "\n\nPrices are examples and may not reflect actual selling prices.";
+        }
+
+        if (text.includes("exam") || text.includes("study")) {
+            return "For study and exam preparation, consider Data Structures, " +
+                "Database Management, Computer Networks, or Python Programming. " +
+                "Choose the book that matches your syllabus.";
+        }
+
+        return "I'd love to help! 😊 Try asking for programming books, " +
+            "computer science books, fiction, self-help, budget books, or study books.";
+    }
+
+    function formatRecommendations(category) {
+        const matches = assistantBooks.filter(book => book.category === category);
+
+        if (matches.length === 0) {
+            return "Sorry, I couldn't find a matching book.";
+        }
+
+        return "Here are some recommendations for you 📚:\n\n" +
+            matches.map(book =>
+                book.title + " by " + book.author +
+                " — ₹" + book.price +
+                "\n" + book.description
+            ).join("\n\n") +
+            "\n\nYou can find these titles in our demo catalogue.";
+    }
+
+    function sendQuestion(question) {
+        const cleanedQuestion = question.trim();
+
+        if (!cleanedQuestion) return;
+
+        addMessage("You: " + cleanedQuestion, "user-message");
+
+        const answer = recommendBooks(cleanedQuestion);
+        addMessage("Book Buddy: " + answer, "bot-message");
+
+        questionInput.value = "";
+        questionInput.focus();
+    }
+
+    document.getElementById("chatForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        sendQuestion(questionInput.value);
+    });
+
+    document.querySelectorAll("[data-question]").forEach(button => {
+        button.addEventListener("click", function() {
+            sendQuestion(this.dataset.question);
+        });
+    });
+
+    document.getElementById("clearChat").addEventListener("click", function() {
+        chatMessages.replaceChildren();
+
+        addMessage(
+            "Hi again! 👋 What kind of book are you looking for?",
+            "bot-message"
+        );
+    });
+</script>
+```
+
+</body>
+</html>

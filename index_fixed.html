@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Book Bazaar | Student Book Marketplace</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f7f5fc;
+    color: #29223a;
+}
+
+header {
+    background: white;
+    padding: 20px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    box-shadow: 0 2px 10px #ddd;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+    color: #6639b7;
+}
+
+nav {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    text-decoration: none;
+    color: #34284a;
+    font-weight: bold;
+}
+
+.hero {
+    margin: 30px auto;
+    width: 90%;
+    padding: 55px 25px;
+    text-align: center;
+    border-radius: 20px;
+    background: #e9e0ff;
+}
+
+.hero h1 {
+    font-size: 38px;
+    color: #4c2c91;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    line-height: 1.8;
+    max-width: 750px;
+    margin: 0 auto 20px;
+}
+
+button {
+    background: #6639b7;
+    color: white;
+    border: none;
+    padding: 11px 15px;
+    border-radius: 8px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #482583;
+}
+
+.search-area {
+    text-align: center;
+    padding: 20px;
+}
+
+input {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin: 5px;
+    max-width: 95%;
+}
+
+section {
+    padding: 25px 6%;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+.categories {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.category {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    cursor: pointer;
+}
+
+.category:hover {
+    background: #e9e0ff;
+}
+
+.books {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 20px;
+}
+
+.book-card {
+    background: white;
+    padding: 18px;
+    text-align: center;
+    border-radius: 14px;
+    box-shadow: 0 3px 12px #e5e0ef;
+}
+
+.book-cover {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 65px;
+    background: #eee7ff;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.book-card h3 {
+    margin: 10px 0;
+}
+
+.book-card p {
+    margin: 8px 0;
+}
+
+.price {
+    color: #6639b7;
+    font-weight: bold;
+    font-size: 21px;
+}
+
+.panel {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    line-height: 1.8;
+}
+
+#messages {
+    height: 200px;
+    overflow-y: auto;
+    background: #f7f5fc;
+    padding: 12px;
+    margin: 15px 0;
+    border-radius: 8px;
+}
+
+.message {
+    padding: 10px;
+    background: #e9e0ff;
+    border-radius: 8px;
+    margin: 8px 0;
+}
+
+footer {
+    background: #302047;
+    color: white;
+    text-align: center;
+    padding: 30px;
+    margin-top: 30px;
+}
+
+@media(max-width: 600px) {
+    .hero h1 {
+        font-size: 28px;
+    }
+
+    header {
+        justify-content: center;
+    }
+
+    nav {
+        justify-content: center;
+    }
+}/* BOOK BAZAAR — PREMIUM PURPLE THEME */
+
+:root {
+--primary: #6d28d9;
+--primary-dark: #4c1d95;
+--primary-light: #f3e8ff;
+--page-bg: #faf9ff;
+--text-dark: #201537;
+--text-light: #6b6478;
+--white: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+  }
+
+body {
+margin: 0;
+font-family: Arial, Helvetica, sans-serif;
+background: var(--page-bg);
+color: var(--text-dark);
+line-height: 1.6;
+}
+
+header {
+background: var(--white);
+box-shadow: 0 3px 18px rgba(45, 20, 90, 0.08);
+}
+
+nav {
+display: flex;
+align-items: center;
+justify-content: space-between;
+flex-wrap: wrap;
+gap: 15px;
+padding: 18px 5%;
+}
+
+nav a {
+color: var(--text-dark);
+text-decoration: none;
+font-weight: 600;
+margin: 0 8px;
+}
+
+nav a:hover {
+color: var(--primary);
+}
+
+button,
+.btn,
+input[type="button"],
+input[type="submit"] {
+background: var(--primary);
+color: var(--white);
+border: none;
+border-radius: 10px;
+padding: 11px 18px;
+cursor: pointer;
+font-weight: 600;
+transition: 0.2s ease;
+}
+
+button:hover,
+.btn:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover {
+background: var(--primary-dark);
+transform: translateY(-2px);
+}
+
+input,
+select,
+textarea {
+max-width: 100%;
+padding: 12px;
+border: 1px solid #ded6ee;
+border-radius: 10px;
+background: var(--white);
+font: inherit;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+outline: 2px solid #c4b5fd;
+border-color: var(--primary);
+}
+
+section {
+padding: 35px 5%;
+}
+
+h1,
+h2,
+h3 {
+color: var(--text-dark);
+line-height: 1.25;
+}
+
+h1 {
+font-size: clamp(32px, 5vw, 54px);
+letter-spacing: -1.5px;
+}
+
+h2 {
+font-size: clamp(24px, 3vw, 34px);
+}
+
+p {
+color: var(--text-light);
+}
+
+.book-card,
+.card,
+.product-card {
+background: var(--white);
+border: 1px solid #eee7fa;
+border-radius: 16px;
+padding: 20px;
+box-shadow: 0 5px 20px rgba(45, 20, 90, 0.05);
+transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.book-card:hover,
+.card:hover,
+.product-card:hover {
+transform: translateY(-5px);
+box-shadow: 0 12px 28px rgba(45, 20, 90, 0.12);
+}
+
+img {
+max-width: 100%;
+height: auto;
+border-radius: 10px;
+}
+
+footer {
+background: #24143d;
+color: var(--white);
+padding: 30px 5%;
+text-align: center;
+}
+
+footer p {
+color: #e5d9f8;
+}
+
+@media (max-width: 600px) {
+nav {
+flex-direction: column;
+align-items: flex-start;
+}
+
+nav a {
+    display: inline-block;
+    margin: 5px;
+}
+
+section {
+    padding: 25px 5%;
+}
+
+h1 {
+    font-size: 34px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+    <div class="logo">📚 Book Bazaar</div>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#books">Books</a>
+    <a href="#categories">Categories</a>
+    <a href="#exchange">Exchange</a>
+    <a href="#assistant">AI Assistant</a>
+</nav>
+
+<div>
+    🛒 <a href="cart.html" style="color: #6d28d9; text-decoration: none;">Cart (<span id="cartCount">0</span>)</a>
+    ❤️ Wishlist: <span id="wishCount">0</span>
+</div>
+
+</header>
+
+<div class="hero" id="home">
+    <h1>THE STUDENT BOOK MARKETPLACE</h1>
+
+<p>
+    Welcome to Book Bazaar, your ultimate student book marketplace!
+    Discover affordable textbooks, explore your favourite novels,
+    buy and sell pre-loved books, and exchange study materials with
+    fellow students. With book recommendations, study tools,
+    semester-wise collections, and budget-friendly deals,
+    Book Bazaar makes learning easier, smarter, and more affordable.
+    Find your next favourite book and make every page count!
+</p>
+
+<button onclick="document.getElementById('books').scrollIntoView()">
+    Explore Books
+</button>
+
+</div>
+
+<div class="search-area">
+    <input
+        id="search"
+        placeholder="Search books or subjects..."
+        oninput="displayBooks()">
+
+<input
+    id="budget"
+    type="number"
+    min="0"
+    placeholder="Maximum budget ₹"
+    oninput="displayBooks()">
+
+</div>
+
+<section id="categories">
+    <h2>Explore Categories</h2>
+
+<div class="categories">
+    <button onclick="filterCategory('All')">All Books</button>
+    <button onclick="filterCategory('Programming')">Programming</button>
+    <button onclick="filterCategory('Academic')">Academic</button>
+    <button onclick="filterCategory('Novel')">Novels</button>
+    <button onclick="filterCategory('Science')">Science</button>
+</div>
+
+</section>
+
+<section id="books">
+    <h2>Discover Your Next Book 📚</h2>
+
+<div class="books" id="bookList"></div>
+
+</section>
+
+<section id="exchange">
+    <h2>🔄 Book Exchange</h2>
+
+<div class="panel">
+    <p>Have old books? Prepare them for exchange with fellow students.</p>
+    <p>Our next development step will add a form to submit exchange listings.</p>
+</div>
+
+</section>
+
+<section id="assistant">
+    <h2>🤖 Book Bazaar Assistant</h2>
+
+<div class="panel">
+    <p>Ask for book recommendations or help finding books.</p>
+
+    <div id="messages">
+        <div class="message">
+            Assistant: Hello! Ask me about programming, science,
+            novels or affordable books.
+        </div>
+    </div>
+
+    <input
+        id="question"
+        placeholder="Type your question..."
+        style="width:70%">
+
+    <button onclick="askAssistant()">Send</button>
+
+    <p><small>This first version uses predefined answers, not a real AI model.</small></p>
+</div>
+
+</section>
+
+<section id="dashboard">
+    <h2>📊 Student Dashboard</h2>
+
+<div class="panel">
+    <p>Books in cart: <span id="dashboardCart">0</span></p>
+    <p>Books in wishlist: <span id="dashboardWish">0</span></p>
+    <p>Today's goal: Read 20 pages!</p>
+</div>
+
+</section>
+
+<footer>
+    <h3>📚 Book Bazaar</h3>
+    <p>Made for students, by students.</p>
+    <p>Buy • Sell • Exchange • Learn</p>
+</footer>
+
+<script>
+const books = [
+    { id: 1, title: "Python Programming", author: "Programming Guide", price: 299, category: "Programming", icon: "🐍" },
+    { id: 2, title: "Data Structures", author: "Computer Science", price: 350, category: "Programming", icon: "💻" },
+    { id: 3, title: "Database Management", author: "DBMS Guide", price: 250, category: "Academic", icon: "🗄️" },
+    { id: 4, title: "Artificial Intelligence", author: "AI Fundamentals", price: 399, category: "Science", icon: "🤖" },
+    { id: 5, title: "The Mystery Novel", author: "Fiction Collection", price: 199, category: "Novel", icon: "🔎" },
+    { id: 6, title: "Computer Networks", author: "Networking Guide", price: 320, category: "Academic", icon: "🌐" },
+    { id: 7, title: "Machine Learning", author: "ML Fundamentals", price: 450, category: "Programming", icon: "🧠" },
+    { id: 8, title: "Space and Astronomy", author: "Science Collection", price: 280, category: "Science", icon: "🚀" }
+];
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+let selectedCategory = "All";
+
+try {
+    const savedCart = JSON.parse(localStorage.getItem("bookBazaarCart") || "[]");
+    if (Array.isArray(savedCart)) {
+        savedCart.forEach(item => {
+            const id = typeof item === "number" ? item : Number(item.id);
+            const quantity = typeof item === "number" ? 1 : Number(item.quantity || 1);
+            if (books.some(book => book.id === id) && Number.isInteger(quantity) && quantity > 0) {
+                const existing = cart.find(entry => entry.id === id);
+                if (existing) existing.quantity += quantity;
+                else cart.push({ id, quantity });
+            }
+        });
+    }
+    const savedWishlist = JSON.parse(localStorage.getItem("bookBazaarWishlist") || "[]");
+    if (Array.isArray(savedWishlist)) wishlist = savedWishlist;
+} catch (error) {
+    cart = [];
+    wishlist = [];
+}
+
+function saveShoppingData() {
+    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+}
+
+function addToCart(id) {
+    const book = books.find(item => item.id === id);
+    if (!book) {
+        alert("Sorry, this book could not be found.");
+        return;
+    }
+    const existing = cart.find(item => item.id === id);
+    if (existing) existing.quantity += 1;
+    else cart.push({ id: id, quantity: 1 });
+    saveShoppingData();
+    updateCounts();
+    alert(book.title + " added to your cart!");
+}
+
+(id) {
+    if (wishlist.includes(id)) {
+        alert("This book is already in your wishlist.");
+        return;
+    }
+    wishlist.push(id);
+    saveShoppingData();
+    updateCounts();
+    const book = books.find(item => item.id === id);
+    alert(book.title + " added to your wishlist!");
+}
+
+function updateCounts() {
+    const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+    const cartCountElement = document.getElementById("cartCount");
+    const wishCountElement = document.getElementById("wishCount");
+    const dashboardCart = document.getElementById("dashboardCart");
+    const dashboardWish = document.getElementById("dashboardWish");
+    if (cartCountElement) cartCountElement.textContent = cartCount;
+    if (wishCountElement) wishCountElement.textContent = wishlist.length;
+    if (dashboardCart) dashboardCart.textContent = cartCount;
+    if (dashboardWish) dashboardWish.textContent = wishlist.length;
+}
+
+function displayBooks() {
+    const searchElement = document.getElementById("search");
+    const budgetElement = document.getElementById("budget");
+    const list = document.getElementById("bookList");
+    if (!searchElement || !budgetElement || !list) return;
+    const query = searchElement.value.toLowerCase();
+    const budget = budgetElement.value === "" ? Infinity : Number(budgetElement.value);
+    const filteredBooks = books.filter(book => {
+        const matchesSearch = book.title.toLowerCase().includes(query) || book.author.toLowerCase().includes(query) || book.category.toLowerCase().includes(query);
+        const matchesCategory = selectedCategory === "All" || book.category === selectedCategory;
+        return matchesSearch && matchesCategory && book.price <= budget;
+    });
+    list.innerHTML = "";
+    if (filteredBooks.length === 0) {
+        list.textContent = "No books found. Try a different search.";
+        return;
+    }
+    filteredBooks.forEach(book => {
+        const card = document.createElement("div");
+        card.className = "book-card";
+        const cover = document.createElement("div");
+        cover.className = "book-cover";
+        cover.textContent = book.icon;
+        const title = document.createElement("h3");
+        title.textContent = book.title;
+        const author = document.createElement("p");
+        author.textContent = book.author;
+        const price = document.createElement("p");
+        price.className = "price";
+        price.textContent = "₹" + book.price;
+        const addButton = document.createElement("button");
+        addButton.textContent = "Add to Cart";
+        addButton.type = "button";
+        addButton.addEventListener("click", () => addToCart(book.id));
+        const wishButton = document.createElement("button");
+        wishButton.textContent = "❤️ Wishlist";
+        wishButton.type = "button";
+        wishButton.addEventListener("click", () => addToWishlist(book.id));
+        card.append(cover, title, author, price, addButton, wishButton);
+        list.appendChild(card);
+    });
+}
+
+function filterCategory(category) {
+    selectedCategory = category;
+    displayBooks();
+    const section = document.getElementById("books");
+    if (section) section.scrollIntoView({ behavior: "smooth" });
+}
+
+function askAssistant() {
+    const input = document.getElementById("question");
+    if (!input) return;
+    const question = input.value.trim();
+    if (!question) {
+        alert("Please type a question first.");
+        return;
+    }
+    const q = question.toLowerCase();
+    let answer;
+    if (q.includes("python")) answer = "Start with Python Programming. Learn variables, loops, functions and small projects.";
+    else if (q.includes("ai") || q.includes("machine learning")) answer = "Explore Artificial Intelligence and Machine Learning. Python and basic mathematics are useful starting points.";
+    else if (q.includes("cheap") || q.includes("budget") || q.includes("affordable")) answer = "Enter your maximum price in the budget box above to find affordable books.";
+    else if (q.includes("novel") || q.includes("story")) answer = "Try The Mystery Novel in our Novels category.";
+    else if (q.includes("science") || q.includes("space")) answer = "Explore our Science category for science and astronomy books.";
+    else if (q.includes("hello") || q.includes("hi")) answer = "Hello! Tell me which subject or kind of book interests you.";
+    else answer = "I'm the basic Book Bazaar assistant. Ask about Python, AI, novels, science or affordable books.";
+    const messages = document.getElementById("messages");
+    if (messages) {
+        const userMessage = document.createElement("div");
+        userMessage.className = "message";
+        userMessage.textContent = "You: " + question;
+        const reply = document.createElement("div");
+        reply.className = "message";
+        reply.textContent = "Assistant: " + answer;
+        messages.append(userMessage, reply);
+        messages.scrollTop = messages.scrollHeight;
+    }
+    input.value = "";
+}
+
+displayBooks();
+updateCounts();
+</script>
+</body>
+</html>

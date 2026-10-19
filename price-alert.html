@@ -1,0 +1,379 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Price Drop Alerts | Book Bazaar</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .alerts-container {
+            max-width: 1000px;
+            margin: 35px auto;
+            padding: 20px;
+        }
+
+        .alerts-hero {
+            text-align: center;
+            padding: 32px 20px;
+            border-radius: 15px;
+            background: #5b4bdb;
+            color: white;
+            margin-bottom: 25px;
+        }
+
+        .alerts-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+
+        .alert-panel {
+            background: white;
+            padding: 23px;
+            border-radius: 12px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+        }
+
+        .alert-panel label {
+            display: block;
+            margin: 15px 0 7px;
+            font-weight: bold;
+        }
+
+        .alert-panel select,
+        .alert-panel input {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        .alert-button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 7px;
+            background: #5b4bdb;
+            color: white;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .alert-button:hover {
+            opacity: 0.88;
+        }
+
+        .alert-card {
+            padding: 16px;
+            margin: 15px 0;
+            border: 1px solid #e7e7e7;
+            border-radius: 10px;
+            overflow-wrap: anywhere;
+        }
+
+        .alert-card h3 {
+            margin-top: 0;
+        }
+
+        .alert-status {
+            padding: 10px;
+            background: #f3f0ff;
+            border-radius: 7px;
+        }
+
+        .alert-reached {
+            background: #e4f8e8;
+            color: #17652d;
+        }
+
+        .alert-remove {
+            border: none;
+            padding: 9px 12px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .alert-message {
+            margin-top: 15px;
+            padding: 12px;
+            background: #f3f0ff;
+            border-radius: 7px;
+        }
+
+        .alert-note {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 700px) {
+            .alerts-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .alerts-container {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="index.html#books">Books</a>
+        <a href="trending.html">Trending Books</a>
+        <a href="deals.html">Student Deals</a>
+        <a href="student-tools.html">Student Tools</a>
+        <a href="reviews.html">Reviews</a>
+        <a href="cart.html">Cart</a>
+    </nav>
+</header>
+
+<main class="alerts-container">
+
+    <section class="alerts-hero">
+        <h1>🔔 Book Price Drop Alerts</h1>
+        <p>Set your target price and plan your next book purchase.</p>
+    </section>
+
+    <div class="alerts-layout">
+
+        <section class="alert-panel">
+            <h2>Create a Price Alert</h2>
+            <p>Select a book and enter the maximum price you want to pay.</p>
+
+            <form id="alertForm">
+
+                <label for="bookSelect">Choose a book</label>
+                <select id="bookSelect" required>
+                    <option value="">Select a book</option>
+                </select>
+
+                <label for="targetPrice">Your target price (₹)</label>
+                <input
+                    type="number"
+                    id="targetPrice"
+                    min="0.01"
+                    step="0.01"
+                    placeholder="Example: 300"
+                    required
+                >
+
+                <button class="alert-button" type="submit">
+                    Create Price Alert
+                </button>
+
+            </form>
+
+            <div class="alert-message" id="formMessage" aria-live="polite">
+                Your price alert will appear in the list.
+            </div>
+        </section>
+
+        <section class="alert-panel">
+            <h2>My Price Alerts</h2>
+            <p>Review your saved target prices.</p>
+
+            <div id="alertsList"></div>
+
+            <p class="alert-note">
+                Alerts are stored in this browser. They do not send email,
+                SMS, or automatic notifications.
+            </p>
+        </section>
+
+    </div>
+
+    <p class="alert-note">
+        Demo notice: Book prices are sample prices for this student project.
+        Price alerts are checked when you open or refresh this page.
+    </p>
+
+</main>
+
+<script>
+    const books = [
+        { id: 1, title: "Python Programming", price: 350 },
+        { id: 2, title: "Data Structures", price: 420 },
+        { id: 3, title: "Database Management", price: 315 },
+        { id: 4, title: "Web Development", price: 385 },
+        { id: 5, title: "Artificial Intelligence", price: 490 },
+        { id: 6, title: "Study and Success", price: 210 }
+    ];
+
+    const STORAGE_KEY = "bb_price_alerts";
+
+    const bookSelect = document.getElementById("bookSelect");
+    const alertForm = document.getElementById("alertForm");
+    const targetPriceInput = document.getElementById("targetPrice");
+    const formMessage = document.getElementById("formMessage");
+    const alertsList = document.getElementById("alertsList");
+
+    function loadBookOptions() {
+        books.forEach(function (book) {
+            const option = document.createElement("option");
+            option.value = String(book.id);
+            option.textContent = book.title + " — ₹" + book.price;
+            bookSelect.appendChild(option);
+        });
+    }
+
+    function getAlerts() {
+        try {
+            const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+
+            if (!Array.isArray(data)) {
+                return [];
+            }
+
+            return data.filter(function (alert) {
+                return alert &&
+                    typeof alert.id === "string" &&
+                    Number.isInteger(alert.bookId) &&
+                    Number.isFinite(alert.targetPrice) &&
+                    alert.targetPrice > 0;
+            });
+        } catch (error) {
+            return [];
+        }
+    }
+
+    function saveAlerts(alerts) {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(alerts));
+            return true;
+        } catch (error) {
+            formMessage.textContent =
+                "Unable to save alerts. Please check browser storage.";
+            return false;
+        }
+    }
+
+    function getBook(bookId) {
+        return books.find(function (book) {
+            return book.id === bookId;
+        });
+    }
+
+    alertForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const bookId = Number(bookSelect.value);
+        const targetPrice = Number(targetPriceInput.value);
+        const book = getBook(bookId);
+
+        if (!book || !Number.isFinite(targetPrice) || targetPrice <= 0) {
+            formMessage.textContent =
+                "Please select a book and enter a target price greater than ₹0.";
+            return;
+        }
+
+        const alerts = getAlerts();
+
+        const alert = {
+            id: Date.now().toString() + "-" +
+                Math.random().toString(36).slice(2),
+            bookId: book.id,
+            targetPrice: targetPrice
+        };
+
+        alerts.unshift(alert);
+
+        if (saveAlerts(alerts)) {
+            alertForm.reset();
+
+            formMessage.textContent =
+                "Price alert created for " + book.title + "!";
+
+            displayAlerts();
+        }
+    });
+
+    function displayAlerts() {
+        const alerts = getAlerts();
+
+        alertsList.replaceChildren();
+
+        if (alerts.length === 0) {
+            const empty = document.createElement("p");
+            empty.textContent = "You haven't created any price alerts yet.";
+            alertsList.appendChild(empty);
+            return;
+        }
+
+        alerts.forEach(function (alert) {
+            const book = getBook(alert.bookId);
+
+            if (!book) {
+                return;
+            }
+
+            const reached = book.price <= alert.targetPrice;
+
+            const card = document.createElement("article");
+            card.className = "alert-card";
+
+            const title = document.createElement("h3");
+            title.textContent = "📘 " + book.title;
+
+            const currentPrice = document.createElement("p");
+            currentPrice.textContent =
+                "Current sample price: ₹" + book.price;
+
+            const targetPrice = document.createElement("p");
+            targetPrice.textContent =
+                "Your target price: ₹" + alert.targetPrice.toFixed(2);
+
+            const status = document.createElement("p");
+            status.className = "alert-status" +
+                (reached ? " alert-reached" : "");
+
+            status.textContent = reached
+                ? "🎉 Target reached! This sample price is within your budget."
+                : "⏳ Target not reached yet. You need a lower price.";
+
+            const removeButton = document.createElement("button");
+            removeButton.className = "alert-remove";
+            removeButton.textContent = "Remove Alert";
+            removeButton.type = "button";
+
+            removeButton.addEventListener("click", function () {
+                const updatedAlerts = getAlerts().filter(function (item) {
+                    return item.id !== alert.id;
+                });
+
+                if (saveAlerts(updatedAlerts)) {
+                    displayAlerts();
+                    formMessage.textContent = "Price alert removed.";
+                }
+            });
+
+            card.append(
+                title,
+                currentPrice,
+                targetPrice,
+                status,
+                removeButton
+            );
+
+            alertsList.appendChild(card);
+        });
+    }
+
+    loadBookOptions();
+    displayAlerts();
+</script>
+
+</body>
+</html>
+```

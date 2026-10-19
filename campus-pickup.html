@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Pickup | Book Bazaar</title>
+    <link rel="stylesheet" href="style.css">
+
+```
+<style>
+    .pickup-page {
+        max-width: 1050px;
+        margin: 30px auto;
+        padding: 20px;
+    }
+
+    .pickup-hero {
+        background: linear-gradient(135deg, #176b87, #52b69a);
+        color: white;
+        padding: 40px 22px;
+        border-radius: 18px;
+        text-align: center;
+    }
+
+    .pickup-hero .icon {
+        font-size: 60px;
+    }
+
+    .pickup-hero h1 {
+        margin: 10px 0;
+    }
+
+    .pickup-layout {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 22px;
+        margin-top: 25px;
+    }
+
+    .pickup-card {
+        background: white;
+        border: 1px solid #e8e8e8;
+        border-radius: 14px;
+        padding: 23px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    }
+
+    .pickup-card .icon {
+        font-size: 38px;
+    }
+
+    .pickup-form {
+        background: white;
+        padding: 25px;
+        border-radius: 14px;
+        margin-top: 25px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    }
+
+    .pickup-form label {
+        display: block;
+        font-weight: bold;
+        margin: 16px 0 7px;
+    }
+
+    .pickup-form input,
+    .pickup-form select,
+    .pickup-form textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 15px;
+        box-sizing: border-box;
+    }
+
+    .pickup-form textarea {
+        resize: vertical;
+        min-height: 85px;
+    }
+
+    .pickup-button {
+        margin-top: 18px;
+        padding: 12px 20px;
+        background: #176b87;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .pickup-button:hover {
+        background: #10556d;
+    }
+
+    .pickup-result {
+        display: none;
+        background: #e8fff4;
+        border: 1px solid #9cdec1;
+        border-radius: 10px;
+        padding: 18px;
+        margin-top: 20px;
+    }
+
+    .pickup-warning {
+        background: #fff8e6;
+        border-left: 5px solid #e7a52d;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 22px;
+    }
+
+    .pickup-back {
+        display: inline-block;
+        margin: 25px 0;
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+<header>
+    <h2>📚 Book Bazaar</h2>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="index.html#books">Books</a>
+        <a href="exchange.html">Exchange</a>
+        <a href="semester-books.html">Semester Books</a>
+        <a href="cart.html">Cart</a>
+        <a href="wishlist.html">Wishlist</a>
+    </nav>
+</header>
+
+<main class="pickup-page">
+
+```
+<section class="pickup-hero">
+    <div class="icon">🎓</div>
+    <h1>Campus Pickup</h1>
+    <p>A convenient way for students to plan a book collection.</p>
+    <p>Save time, connect with fellow students and make book sharing easier!</p>
+</section>
+
+<section class="pickup-layout">
+
+    <article class="pickup-card">
+        <div class="icon">📚</div>
+        <h3>Choose Your Books</h3>
+        <p>Browse the Book Bazaar catalogue and identify the books you need.</p>
+    </article>
+
+    <article class="pickup-card">
+        <div class="icon">📅</div>
+        <h3>Plan a Collection</h3>
+        <p>Select a preferred date and time for a proposed campus meeting.</p>
+    </article>
+
+    <article class="pickup-card">
+        <div class="icon">🤝</div>
+        <h3>Confirm the Details</h3>
+        <p>Make arrangements directly with the seller before travelling to collect a book.</p>
+    </article>
+
+</section>
+
+<section class="pickup-form">
+    <h2>📝 Pickup Planning Form</h2>
+    <p>Fill in this demo form to create a local pickup plan.</p>
+
+    <form id="pickupForm">
+
+        <label for="studentName">Student Name</label>
+        <input
+            type="text"
+            id="studentName"
+            placeholder="Enter your name"
+            required
+        >
+
+        <label for="bookName">Book Name</label>
+        <input
+            type="text"
+            id="bookName"
+            placeholder="Enter the book you want"
+            required
+        >
+
+        <label for="campus">Preferred Campus or Meeting Point</label>
+        <input
+            type="text"
+            id="campus"
+            placeholder="Enter a proposed public meeting point"
+            required
+        >
+
+        <label for="pickupDate">Preferred Date</label>
+        <input type="date" id="pickupDate" required>
+
+        <label for="pickupTime">Preferred Time</label>
+        <select id="pickupTime" required>
+            <option value="">Choose a time</option>
+            <option value="10 AM - 12 PM">10 AM - 12 PM</option>
+            <option value="12 PM - 2 PM">12 PM - 2 PM</option>
+            <option value="2 PM - 4 PM">2 PM - 4 PM</option>
+            <option value="4 PM - 6 PM">4 PM - 6 PM</option>
+        </select>
+
+        <label for="pickupNotes">Additional Notes (Optional)</label>
+        <textarea
+            id="pickupNotes"
+            placeholder="Add any useful details..."
+        ></textarea>
+
+        <button class="pickup-button" type="submit">
+            Save Pickup Plan
+        </button>
+
+    </form>
+
+    <div class="pickup-result" id="pickupResult" aria-live="polite">
+        <h3>✅ Pickup Plan Saved!</h3>
+        <div id="pickupDetails"></div>
+        <button class="pickup-button" id="clearPlan" type="button">
+            Clear This Plan
+        </button>
+    </div>
+</section>
+
+<div class="pickup-warning">
+    <strong>Important:</strong> This is a student-project demonstration.
+    Saving a plan does not contact a seller or reserve a book. No pickup is
+    confirmed automatically. Arrange collection directly with the seller,
+    and choose a safe public meeting place.
+</div>
+
+<a class="pickup-back" href="index.html">← Back to Home</a>
+```
+
+</main>
+
+<footer>
+    <p>© 2026 Book Bazaar | Making Student Book Sharing Easier 📚</p>
+</footer>
+
+<script>
+    const pickupForm = document.getElementById("pickupForm");
+    const pickupResult = document.getElementById("pickupResult");
+    const pickupDetails = document.getElementById("pickupDetails");
+    const pickupDate = document.getElementById("pickupDate");
+
+    // Prevent selecting a date in the past.
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+
+    pickupDate.min = year + "-" + month + "-" + day;
+
+    function displaySavedPlan() {
+        const savedPlan = localStorage.getItem("bb_pickup_plan");
+
+        if (!savedPlan) {
+            pickupResult.style.display = "none";
+            return;
+        }
+
+        try {
+            const plan = JSON.parse(savedPlan);
+
+            pickupDetails.replaceChildren();
+
+            const fields = [
+                ["Student", plan.name],
+                ["Book", plan.book],
+                ["Meeting point", plan.campus],
+                ["Preferred date", plan.date],
+                ["Preferred time", plan.time],
+                ["Notes", plan.notes || "None"]
+            ];
+
+            fields.forEach(function(field) {
+                const paragraph = document.createElement("p");
+                const strong = document.createElement("strong");
+
+                strong.textContent = field[0] + ": ";
+                paragraph.appendChild(strong);
+                paragraph.appendChild(document.createTextNode(field[1]));
+                pickupDetails.appendChild(paragraph);
+            });
+
+            pickupResult.style.display = "block";
+        } catch (error) {
+            localStorage.removeItem("bb_pickup_plan");
+            pickupResult.style.display = "none";
+        }
+    }
+
+    pickupForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const plan = {
+            name: document.getElementById("studentName").value.trim(),
+            book: document.getElementById("bookName").value.trim(),
+            campus: document.getElementById("campus").value.trim(),
+            date: pickupDate.value,
+            time: document.getElementById("pickupTime").value,
+            notes: document.getElementById("pickupNotes").value.trim()
+        };
+
+        if (!plan.name || !plan.book || !plan.campus || !plan.date || !plan.time) {
+            alert("Please fill in all required fields.");
+            return;
+        }
+
+        if (plan.date < pickupDate.min) {
+            alert("Please select today or a future date.");
+            return;
+        }
+
+        try {
+            localStorage.setItem("bb_pickup_plan", JSON.stringify(plan));
+            displaySavedPlan();
+            pickupForm.reset();
+            pickupDate.min = year + "-" + month + "-" + day;
+        } catch (error) {
+            alert("Could not save your plan. Please check your browser settings.");
+        }
+    });
+
+    document.getElementById("clearPlan").addEventListener("click", function() {
+        localStorage.removeItem("bb_pickup_plan");
+        displaySavedPlan();
+    });
+
+    displaySavedPlan();
+</script>
+
+</body>
+</html>

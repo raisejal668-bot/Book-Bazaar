@@ -1,0 +1,376 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FAQs | Book Bazaar</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .faq-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .faq-hero {
+            text-align: center;
+            padding: 35px 20px;
+            background: #5b4bdb;
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .faq-hero h1 {
+            font-size: 34px;
+            margin-top: 0;
+        }
+
+        .faq-search {
+            width: 100%;
+            padding: 14px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 25px;
+        }
+
+        .faq-category {
+            margin: 30px 0 15px;
+            color: #5b4bdb;
+        }
+
+        .faq-item {
+            background: white;
+            border: 1px solid #e5e5e5;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 18px;
+            text-align: left;
+            border: none;
+            background: white;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .faq-question:hover {
+            background: #f7f5ff;
+        }
+
+        .faq-icon {
+            color: #5b4bdb;
+            font-size: 20px;
+        }
+
+        .faq-answer {
+            padding: 0 18px 18px;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        .faq-answer[hidden] {
+            display: none;
+        }
+
+        .faq-contact {
+            text-align: center;
+            margin-top: 35px;
+            padding: 25px;
+            background: #f3f0ff;
+            border-radius: 12px;
+        }
+
+        .faq-contact a {
+            color: #5b4bdb;
+            font-weight: bold;
+        }
+
+        .back-home {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+        }
+
+        #noResults {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+
+        @media (max-width: 600px) {
+            .faq-container {
+                padding: 12px;
+            }
+
+            .faq-hero h1 {
+                font-size: 27px;
+            }
+
+            .faq-question {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="index.html#books">Books</a>
+        <a href="exchange.html">Exchange</a>
+        <a href="assistant.html">Book Assistant</a>
+        <a href="student-tools.html">Student Tools</a>
+        <a href="deals.html">Student Deals</a>
+        <a href="wishlist.html">Wishlist</a>
+        <a href="cart.html">Cart</a>
+    </nav>
+</header>
+
+<main class="faq-container">
+
+    <a href="index.html" class="back-home">← Back to Home</a>
+
+    <section class="faq-hero">
+        <h1>Frequently Asked Questions ❓</h1>
+        <p>Everything you need to know about Book Bazaar.</p>
+    </section>
+
+    <input
+        type="search"
+        id="faqSearch"
+        class="faq-search"
+        placeholder="🔍 Search your question..."
+        aria-label="Search frequently asked questions"
+    >
+
+    <p id="noResults" hidden>No matching questions found. Try another search.</p>
+
+    <h2 class="faq-category">📚 Books and Shopping</h2>
+
+    <section class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+            What is Book Bazaar?
+            <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer" hidden>
+            Book Bazaar is a student-focused book marketplace project where
+            users can explore books, manage a wishlist, add books to a cart,
+            and discover student learning tools.
+        </div>
+    </section>
+
+    <section class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+            How can I find a book?
+            <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer" hidden>
+            Open the Books section on the home page. You can browse the
+            available collection and use the search and category options
+            if they are available on your page.
+        </div>
+    </section>
+
+    <section class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+            How do I add a book to my cart?
+            <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer" hidden>
+            Click the Add to Cart button on a book. Open the Cart page to
+            review the items saved by your browser.
+        </div>
+    </section>
+
+    <section class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+            How does the wishlist work?
+            <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer" hidden>
+            Add a book to your wishlist to keep track of books you may want
+            to read or purchase later. Your wishlist is stored in your browser.
+        </div>
+    </section>
+
+    <h2 class="faq-category">🔄 Book Exchange</h2>
+
+    <section class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+            Can I exchange my old books?
+            <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer" hidden>
+            The Book Exchange page lets you create sample listings for books
+            you want to exchange. Contacting another user and completing a
+            real exchange may require arrangements outside this demo website.
+        </div>
+    </section>
+
+    <section class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+            Are the exchange listings visible to everyone?
+            <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer" hidden>
+            In this version, listings are stored in your browser. They are
+            not automatically shared with other users or devices.
+        </div>
+    </section>
+
+    <h2 class="faq-category">🎓 Student Features</h2>
+
+    <section class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+            What are Student Tools?
+            <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer" hidden>
+            Student Tools includes a book recommendation quiz, a study timer,
+            a reading progress list, and a student budget calculator.
+        </div>
+    </section>
+
+    <section class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+            Are Student Deals real discounts?
+            <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer" hidden>
+            The deals currently displayed are sample prices for this student
+            project. They are not verified offers from real sellers.
+        </div>
+    </section>
+
+    <section class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+            Is the Book Assistant a real AI chatbot?
+            <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer" hidden>
+            The current Book Assistant uses predefined recommendations and
+            keyword matching. It does not connect to a real AI service.
+        </div>
+    </section>
+
+    <h2 class="faq-category">🔐 Accounts and Privacy</h2>
+
+    <section class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+            Do I need to register?
+            <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer" hidden>
+            You can browse the demo pages without a real online account.
+            Registration and login in this version use browser storage only.
+        </div>
+    </section>
+
+    <section class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+            Is my information stored online?
+            <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer" hidden>
+            This version stores certain information in your browser using
+            localStorage. It does not provide a shared online database.
+            Avoid entering real passwords or sensitive personal information.
+        </div>
+    </section>
+
+    <section class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+            Does checkout make a real payment?
+            <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer" hidden>
+            No. The current project is a front-end demonstration and does
+            not process real payments or place real orders.
+        </div>
+    </section>
+
+    <section class="faq-contact">
+        <h2>Still have questions? 💬</h2>
+        <p>Visit our other pages to explore the Book Bazaar features.</p>
+        <a href="index.html">Explore Book Bazaar</a>
+    </section>
+
+</main>
+
+<script>
+    // Open and close FAQ answers
+    const faqButtons = document.querySelectorAll(".faq-question");
+
+    faqButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            const answer = button.nextElementSibling;
+            const isOpen = button.getAttribute("aria-expanded") === "true";
+
+            button.setAttribute("aria-expanded", String(!isOpen));
+            answer.hidden = isOpen;
+
+            button.querySelector(".faq-icon").textContent =
+                isOpen ? "+" : "−";
+        });
+    });
+
+    // Search FAQ questions and answers
+    const searchInput = document.getElementById("faqSearch");
+    const faqItems = document.querySelectorAll(".faq-item");
+    const faqCategories = document.querySelectorAll(".faq-category");
+    const noResults = document.getElementById("noResults");
+
+    searchInput.addEventListener("input", function () {
+        const query = searchInput.value.trim().toLowerCase();
+        let visibleCount = 0;
+
+        faqItems.forEach(function (item) {
+            const matches = item.textContent.toLowerCase().includes(query);
+
+            item.hidden = !matches;
+
+            if (matches) {
+                visibleCount++;
+            }
+        });
+
+        faqCategories.forEach(function (category) {
+            let next = category.nextElementSibling;
+            let hasVisibleItem = false;
+
+            while (next && !next.classList.contains("faq-category")) {
+                if (
+                    next.classList.contains("faq-item") &&
+                    !next.hidden
+                ) {
+                    hasVisibleItem = true;
+                }
+
+                next = next.nextElementSibling;
+            }
+
+            category.hidden = !hasVisibleItem;
+        });
+
+        noResults.hidden = visibleCount > 0;
+    });
+</script>
+
+</body>
+</html>
+```

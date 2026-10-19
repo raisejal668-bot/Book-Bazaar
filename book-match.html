@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Match Quiz | Book Bazaar</title>
+    <link rel="stylesheet" href="style.css">
+
+```
+<style>
+    .match-page {
+        max-width: 900px;
+        margin: 35px auto;
+        padding: 20px;
+    }
+
+    .match-hero {
+        background: linear-gradient(135deg, #ff758c, #ff7eb3);
+        color: white;
+        text-align: center;
+        padding: 40px 20px;
+        border-radius: 20px;
+    }
+
+    .match-hero .icon {
+        font-size: 60px;
+    }
+
+    .quiz-box {
+        background: white;
+        margin-top: 25px;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+    }
+
+    .question {
+        margin: 25px 0;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .question h3 {
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 12px;
+        margin: 9px 0;
+        background: #fff5f8;
+        border: 1px solid #f4d8e1;
+        border-radius: 9px;
+        cursor: pointer;
+    }
+
+    .option:hover {
+        background: #ffe5ed;
+    }
+
+    .option input {
+        margin-right: 10px;
+    }
+
+    .match-button {
+        background: #e94e77;
+        color: white;
+        padding: 13px 20px;
+        border: none;
+        border-radius: 9px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .match-button:hover {
+        background: #c9335d;
+    }
+
+    .result-box {
+        display: none;
+        background: #fff0f5;
+        border: 1px solid #ffd0df;
+        padding: 25px;
+        margin-top: 25px;
+        border-radius: 15px;
+    }
+
+    .result-book {
+        background: white;
+        padding: 18px;
+        margin-top: 15px;
+        border-radius: 10px;
+    }
+
+    .result-book h3 {
+        color: #c9335d;
+    }
+
+    .result-price {
+        font-weight: bold;
+    }
+
+    .match-note {
+        color: #666;
+        font-size: 14px;
+        margin-top: 20px;
+    }
+
+    .match-back {
+        display: inline-block;
+        margin: 25px 0;
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+<header>
+    <h2>📚 Book Bazaar</h2>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="index.html#books">Books</a>
+        <a href="semester-books.html">Semester Books</a>
+        <a href="mystery-box.html">Mystery Box</a>
+        <a href="wishlist.html">Wishlist</a>
+        <a href="cart.html">Cart</a>
+    </nav>
+</header>
+
+<main class="match-page">
+
+```
+<section class="match-hero">
+    <div class="icon">💖📚</div>
+    <h1>Find Your Book Match!</h1>
+    <p>Answer a few questions and discover books that match your interests.</p>
+</section>
+
+<section class="quiz-box">
+
+    <h2>✨ Your Reading Personality Quiz</h2>
+    <p>Choose one answer for each question.</p>
+
+    <form id="matchForm">
+
+        <div class="question">
+            <h3>1. What kind of book do you enjoy?</h3>
+
+            <label class="option">
+                <input type="radio" name="genre" value="fiction" required>
+                Fiction and adventure
+            </label>
+
+            <label class="option">
+                <input type="radio" name="genre" value="romance">
+                Romance and relationships
+            </label>
+
+            <label class="option">
+                <input type="radio" name="genre" value="mystery">
+                Mystery and thriller
+            </label>
+
+            <label class="option">
+                <input type="radio" name="genre" value="technology">
+                Technology and computer science
+            </label>
+
+            <label class="option">
+                <input type="radio" name="genre" value="selfhelp">
+                Self-improvement and learning
+            </label>
+        </div>
+
+        <div class="question">
+            <h3>2. Why do you want to read?</h3>
+
+            <label class="option">
+                <input type="radio" name="purpose" value="fun" required>
+                For fun and entertainment
+            </label>
+
+            <label class="option">
+                <input type="radio" name="purpose" value="study">
+                To improve my knowledge
+            </label>
+
+            <label class="option">
+                <input type="radio" name="purpose" value="growth">
+                To improve myself
+            </label>
+        </div>
+
+        <div class="question">
+            <h3>3. What is your budget?</h3>
+
+            <label class="option">
+                <input type="radio" name="budget" value="100" required>
+                Under ₹100
+            </label>
+
+            <label class="option">
+                <input type="radio" name="budget" value="200">
+                Under ₹200
+            </label>
+
+            <label class="option">
+                <input type="radio" name="budget" value="500">
+                Under ₹500
+            </label>
+        </div>
+
+        <button class="match-button" type="submit">
+            💗 Find My Book Match
+        </button>
+
+    </form>
+
+    <section class="result-box" id="resultBox" aria-live="polite">
+        <h2>🎉 Your Book Matches!</h2>
+        <p id="resultMessage"></p>
+        <div id="bookResults"></div>
+
+        <button class="match-button" id="retryButton" type="button">
+            🔄 Take Quiz Again
+        </button>
+    </section>
+
+    <p class="match-note">
+        These are sample recommendations for the website demonstration.
+        Prices are illustrative, and availability is not guaranteed.
+    </p>
+
+</section>
+
+<a class="match-back" href="index.html">← Back to Home</a>
+```
+
+</main>
+
+<footer>
+    <p>© 2026 Book Bazaar | Find Your Next Favourite Read 📚</p>
+</footer>
+
+<script>
+    const books = [
+        {
+            title: "The Adventure Reader",
+            genre: "fiction",
+            price: 90,
+            description: "A sample pick for readers who enjoy imaginative stories and adventures."
+        },
+        {
+            title: "The Romance Collection",
+            genre: "romance",
+            price: 150,
+            description: "A sample pick for readers who love emotional stories and relationships."
+        },
+        {
+            title: "The Mystery Files",
+            genre: "mystery",
+            price: 180,
+            description: "A sample pick for readers who enjoy puzzles, secrets and suspense."
+        },
+        {
+            title: "The Coding Guide",
+            genre: "technology",
+            price: 200,
+            description: "A sample pick for students interested in programming and computer science."
+        },
+        {
+            title: "The Self-Growth Handbook",
+            genre: "selfhelp",
+            price: 120,
+            description: "A sample pick for readers who want to explore habits and personal development."
+        },
+        {
+            title: "The Creative Journey",
+            genre: "fiction",
+            price: 250,
+            description: "A sample story recommendation for readers who like exploring new worlds."
+        },
+        {
+            title: "Learn Something New",
+            genre: "selfhelp",
+            price: 190,
+            description: "A sample learning recommendation for curious readers."
+        },
+        {
+            title: "Python for Beginners",
+            genre: "technology",
+            price: 95,
+            description: "A sample programming recommendation for students starting with Python."
+        }
+    ];
+
+    const matchForm = document.getElementById("matchForm");
+    const resultBox = document.getElementById("resultBox");
+    const bookResults = document.getElementById("bookResults");
+    const resultMessage = document.getElementById("resultMessage");
+
+    matchForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const genre = document.querySelector('input[name="genre"]:checked').value;
+        const purpose = document.querySelector('input[name="purpose"]:checked').value;
+        const budget = Number(
+            document.querySelector('input[name="budget"]:checked').value
+        );
+
+        let matches = books.filter(function(book) {
+            return book.genre === genre && book.price <= budget;
+        });
+
+        if (purpose === "study") {
+            matches.sort(function(a, b) {
+                const aStudy = a.genre === "technology" ? 1 : 0;
+                const bStudy = b.genre === "technology" ? 1 : 0;
+                return bStudy - aStudy;
+            });
+        }
+
+        if (purpose === "growth") {
+            matches.sort(function(a, b) {
+                const aGrowth = a.genre === "selfhelp" ? 1 : 0;
+                const bGrowth = b.genre === "selfhelp" ? 1 : 0;
+                return bGrowth - aGrowth;
+            });
+        }
+
+        bookResults.replaceChildren();
+
+        if (matches.length === 0) {
+            resultMessage.textContent =
+                "We couldn't find a matching sample book within your budget. Try another budget or genre.";
+        } else {
+            resultMessage.textContent =
+                "Based on your choices, these sample books may interest you!";
+
+            matches.forEach(function(book) {
+                const card = document.createElement("article");
+                card.className = "result-book";
+
+                const title = document.createElement("h3");
+                title.textContent = "📖 " + book.title;
+
+                const description = document.createElement("p");
+                description.textContent = book.description;
+
+                const price = document.createElement("p");
+                price.className = "result-price";
+                price.textContent = "Sample Price: ₹" + book.price;
+
+                card.appendChild(title);
+                card.appendChild(description);
+                card.appendChild(price);
+
+                bookResults.appendChild(card);
+            });
+        }
+
+        resultBox.style.display = "block";
+        resultBox.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    });
+
+    document.getElementById("retryButton").addEventListener("click", function() {
+        matchForm.reset();
+        resultBox.style.display = "none";
+        matchForm.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    });
+</script>
+
+</body>
+</html>

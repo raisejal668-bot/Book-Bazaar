@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Wishlist | Book Bazaar</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f8f5ff;
+    color: #302344;
+}
+
+header {
+    background: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    box-shadow: 0 2px 8px #ddd;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+    color: #6d28d9;
+}
+
+nav a {
+    margin: 8px;
+    text-decoration: none;
+    color: #302344;
+    font-weight: bold;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 35px;
+}
+
+.intro {
+    text-align: center;
+    color: #716b80;
+}
+
+.book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 20px;
+    padding: 30px;
+}
+
+.book-card {
+    background: white;
+    padding: 22px;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px #ddd;
+}
+
+.cover {
+    background: #ede9fe;
+    padding: 25px;
+    font-size: 55px;
+    border-radius: 10px;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #6d28d9;
+}
+
+button {
+    border: none;
+    padding: 11px;
+    margin: 5px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.cart-btn {
+    background: #6d28d9;
+    color: white;
+}
+
+.remove-btn {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.empty {
+    text-align: center;
+    padding: 40px 15px;
+    font-size: 18px;
+}
+
+footer {
+    background: #302344;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">📚 Book Bazaar</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="books.html">Books</a>
+        <a href="cart.html">Cart 🛒</a>
+        <a href="wishlist.html">Wishlist ❤️</a>
+    </nav>
+</header>
+
+<h1>❤️ My Wishlist</h1>
+<p class="intro">Your favourite books, saved in one place!</p>
+
+<div id="wishlistBooks" class="book-grid"></div>
+
+<footer>
+    <p>📚 Book Bazaar — The Student Book Marketplace</p>
+</footer>
+
+<script>
+function getWishlist() {
+    try {
+        return JSON.parse(localStorage.getItem("wishlist")) || [];
+    } catch (error) {
+        return [];
+    }
+}
+
+function displayWishlist() {
+    const container = document.getElementById("wishlistBooks");
+    const wishlist = getWishlist();
+
+    container.innerHTML = "";
+
+    if (wishlist.length === 0) {
+        container.innerHTML = `
+            <div class="empty" style="grid-column:1/-1">
+                <h2>Your wishlist is empty! 💔</h2>
+                <p>Go to the homepage and click ♡ Wishlist on a book.</p>
+                <a href="index.html">Explore Books</a>
+            </div>`;
+        return;
+    }
+
+    wishlist.forEach(function(book, index) {
+        const card = document.createElement("div");
+        card.className = "book-card";
+
+        const title = document.createElement("h3");
+        title.textContent = book.title || "Book";
+
+        const cover = document.createElement("div");
+        cover.className = "cover";
+        cover.textContent = "📚";
+
+        const price = document.createElement("p");
+        price.className = "price";
+        price.textContent = "₹" + (Number(book.price) || 0);
+
+        const cartButton = document.createElement("button");
+        cartButton.className = "cart-btn";
+        cartButton.textContent = "🛒 Add to Cart";
+        cartButton.onclick = function() {
+            addToCart(book);
+        };
+
+        const removeButton = document.createElement("button");
+        removeButton.className = "remove-btn";
+        removeButton.textContent = "Remove";
+        removeButton.onclick = function() {
+            removeFromWishlist(index);
+        };
+
+        card.append(cover, title, price, cartButton, removeButton);
+        container.appendChild(card);
+    });
+}
+
+function addToCart(book) {
+    let cart;
+
+    try {
+        cart = JSON.parse(localStorage.getItem("cart")) || [];
+    } catch (error) {
+        cart = [];
+    }
+
+    const id = book.id;
+    const existing = cart.find(item => item.id === id);
+
+    if (existing) {
+        existing.quantity = (Number(existing.quantity) || 1) + 1;
+    } else {
+        cart.push({
+            id: id,
+            title: book.title,
+            price: Number(book.price) || 0,
+            quantity: 1
+        });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert(book.title + " added to your cart! 🛒");
+}
+
+function removeFromWishlist(index) {
+    const wishlist = getWishlist();
+    wishlist.splice(index, 1);
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+    displayWishlist();
+}
+
+displayWishlist();
+</script>
+
+</body>
+</html>
+

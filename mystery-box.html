@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystery Book Box | Book Bazaar</title>
+    <link rel="stylesheet" href="style.css">
+
+```
+<style>
+    .mystery-page {
+        max-width: 1000px;
+        margin: 35px auto;
+        padding: 20px;
+    }
+
+    .mystery-hero {
+        background: linear-gradient(135deg, #33245c, #8b5cf6);
+        color: white;
+        padding: 45px 20px;
+        text-align: center;
+        border-radius: 20px;
+    }
+
+    .mystery-hero .big-icon {
+        font-size: 65px;
+    }
+
+    .mystery-hero h1 {
+        font-size: 32px;
+        margin: 12px 0;
+    }
+
+    .mystery-panel {
+        background: white;
+        padding: 25px;
+        border-radius: 16px;
+        margin-top: 25px;
+        box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+    }
+
+    .mystery-panel label {
+        display: block;
+        font-weight: bold;
+        margin: 18px 0 8px;
+    }
+
+    .mystery-panel select {
+        width: 100%;
+        padding: 13px;
+        border: 1px solid #ddd;
+        border-radius: 9px;
+        font-size: 15px;
+    }
+
+    .mystery-button {
+        background: #6c4ce8;
+        color: white;
+        border: none;
+        padding: 13px 20px;
+        border-radius: 9px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 22px;
+    }
+
+    .mystery-button:hover {
+        background: #5035bd;
+    }
+
+    .surprise-result {
+        display: none;
+        margin-top: 25px;
+        padding: 25px;
+        border-radius: 15px;
+        background: #f4efff;
+        text-align: center;
+    }
+
+    .surprise-result .book-emoji {
+        font-size: 55px;
+    }
+
+    .surprise-result h2 {
+        color: #5938bd;
+    }
+
+    .surprise-result .price {
+        font-size: 23px;
+        font-weight: bold;
+    }
+
+    .mystery-note {
+        color: #666;
+        font-size: 14px;
+        margin-top: 18px;
+    }
+
+    .mystery-features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 18px;
+        margin-top: 25px;
+    }
+
+    .feature-card {
+        background: white;
+        border: 1px solid #eee;
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+    }
+
+    .feature-card span {
+        font-size: 32px;
+    }
+
+    .mystery-back {
+        display: inline-block;
+        margin: 25px 0;
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+<header>
+    <h2>📚 Book Bazaar</h2>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="index.html#books">Books</a>
+        <a href="semester-books.html">Semester Books</a>
+        <a href="wishlist.html">Wishlist</a>
+        <a href="cart.html">Cart</a>
+        <a href="student-tools.html">Student Tools</a>
+    </nav>
+</header>
+
+<main class="mystery-page">
+
+```
+<section class="mystery-hero">
+    <div class="big-icon">🎁</div>
+    <h1>Mystery Book Box</h1>
+    <p>Pick your mood and discover a surprise book!</p>
+    <p>Every choice opens a new reading adventure. 📚</p>
+</section>
+
+<section class="mystery-panel">
+    <h2>✨ Create Your Mystery Box</h2>
+    <p>Tell us what you feel like reading today.</p>
+
+    <label for="mood">Choose your reading mood:</label>
+    <select id="mood">
+        <option value="any">Surprise Me!</option>
+        <option value="adventure">Adventure & Fantasy</option>
+        <option value="romance">Romance</option>
+        <option value="mystery">Mystery & Thriller</option>
+        <option value="learning">Learning & Self-Improvement</option>
+        <option value="technology">Technology & Computer Science</option>
+    </select>
+
+    <label for="budget">Choose your sample budget:</label>
+    <select id="budget">
+        <option value="100">Under ₹100</option>
+        <option value="200">Under ₹200</option>
+        <option value="300">Under ₹300</option>
+        <option value="500">Under ₹500</option>
+    </select>
+
+    <button class="mystery-button" onclick="discoverBook()">
+        🎲 Reveal My Mystery Book
+    </button>
+
+    <div class="surprise-result" id="result" aria-live="polite">
+        <div class="book-emoji">📚</div>
+        <h2 id="bookTitle"></h2>
+        <p id="bookDescription"></p>
+        <p><strong>Category:</strong> <span id="bookCategory"></span></p>
+        <p class="price" id="bookPrice"></p>
+        <p id="bookMessage"></p>
+
+        <button class="mystery-button" onclick="discoverBook()">
+            🔄 Try Another Surprise
+        </button>
+    </div>
+
+    <p class="mystery-note">
+        Note: This is a student project demonstration. Book names, prices
+        and recommendations are examples. No physical box is ordered or delivered.
+    </p>
+</section>
+
+<section class="mystery-features">
+    <div class="feature-card">
+        <span>🎯</span>
+        <h3>Personalised Choices</h3>
+        <p>Discover a book based on your selected interests.</p>
+    </div>
+
+    <div class="feature-card">
+        <span>💰</span>
+        <h3>Budget Friendly</h3>
+        <p>Choose a budget before revealing your surprise.</p>
+    </div>
+
+    <div class="feature-card">
+        <span>💜</span>
+        <h3>Explore Something New</h3>
+        <p>Find ideas for your next reading adventure.</p>
+    </div>
+</section>
+
+<a class="mystery-back" href="index.html">← Back to Home</a>
+```
+
+</main>
+
+<footer>
+    <p>© 2026 Book Bazaar | Discover Your Next Favourite Book 📚</p>
+</footer>
+
+<script>
+    const mysteryBooks = [
+        {
+            title: "The Fantasy Adventure",
+            category: "adventure",
+            categoryName: "Adventure & Fantasy",
+            price: 90,
+            description: "Explore magical worlds, unexpected journeys and brave heroes."
+        },
+        {
+            title: "The Romantic Escape",
+            category: "romance",
+            categoryName: "Romance",
+            price: 150,
+            description: "Enjoy a heartwarming story filled with feelings and relationships."
+        },
+        {
+            title: "The Secret Case",
+            category: "mystery",
+            categoryName: "Mystery & Thriller",
+            price: 180,
+            description: "Follow the clues and see whether you can solve the mystery."
+        },
+        {
+            title: "The Self-Growth Guide",
+            category: "learning",
+            categoryName: "Learning & Self-Improvement",
+            price: 120,
+            description: "Explore ideas for building better habits and learning new skills."
+        },
+        {
+            title: "The Coding Companion",
+            category: "technology",
+            categoryName: "Technology & Computer Science",
+            price: 200,
+            description: "Discover programming concepts and ideas for curious computer science students."
+        },
+        {
+            title: "The Magical Journey",
+            category: "adventure",
+            categoryName: "Adventure & Fantasy",
+            price: 250,
+            description: "A sample pick for readers who enjoy imaginative adventures."
+        },
+        {
+            title: "The Hidden Clue",
+            category: "mystery",
+            categoryName: "Mystery & Thriller",
+            price: 280,
+            description: "A sample mystery pick for readers who love solving puzzles."
+        },
+        {
+            title: "The Student Success Book",
+            category: "learning",
+            categoryName: "Learning & Self-Improvement",
+            price: 300,
+            description: "A sample pick about study habits, organisation and personal growth."
+        }
+    ];
+
+    let previousBookTitle = "";
+
+    function discoverBook() {
+        const mood = document.getElementById("mood").value;
+        const budget = Number(document.getElementById("budget").value);
+
+        let matchingBooks = mysteryBooks.filter(function(book) {
+            const matchesMood = mood === "any" || book.category === mood;
+            const matchesBudget = book.price <= budget;
+
+            return matchesMood && matchesBudget;
+        });
+
+        if (matchingBooks.length === 0) {
+            document.getElementById("result").style.display = "block";
+            document.getElementById("bookTitle").textContent = "No Surprise Yet!";
+            document.getElementById("bookDescription").textContent =
+                "No sample books match these choices. Try selecting a higher budget.";
+            document.getElementById("bookCategory").textContent = "Try again";
+            document.getElementById("bookPrice").textContent = "";
+            document.getElementById("bookMessage").textContent = "";
+            return;
+        }
+
+        if (matchingBooks.length > 1) {
+            const alternatives = matchingBooks.filter(function(book) {
+                return book.title !== previousBookTitle;
+            });
+
+            if (alternatives.length > 0) {
+                matchingBooks = alternatives;
+            }
+        }
+
+        const randomIndex = Math.floor(Math.random() * matchingBooks.length);
+        const selectedBook = matchingBooks[randomIndex];
+
+        previousBookTitle = selectedBook.title;
+
+        document.getElementById("bookTitle").textContent = selectedBook.title;
+        document.getElementById("bookDescription").textContent = selectedBook.description;
+        document.getElementById("bookCategory").textContent = selectedBook.categoryName;
+        document.getElementById("bookPrice").textContent =
+            "Sample Price: ₹" + selectedBook.price;
+        document.getElementById("bookMessage").textContent =
+            "🎉 Your mystery pick is ready to explore!";
+
+        document.getElementById("result").style.display = "block";
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Book Bazaar</title>
+    <link rel="stylesheet" href="style.css">
+
+```
+<style>
+    body {
+        background: #f6f3ff;
+        font-family: Arial, sans-serif;
+    }
+
+    .login-container {
+        max-width: 420px;
+        margin: 60px auto;
+        padding: 35px;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 5px 25px #00000012;
+    }
+
+    .login-container h1 {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .login-description {
+        text-align: center;
+        color: #666;
+        margin-bottom: 25px;
+    }
+
+    .login-container label {
+        display: block;
+        margin: 15px 0 7px;
+        font-weight: bold;
+    }
+
+    .login-container input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 15px;
+    }
+
+    .login-btn {
+        width: 100%;
+        padding: 13px;
+        margin-top: 22px;
+        background: #6c4ce4;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .login-btn:hover {
+        background: #5738c9;
+    }
+
+    .login-message {
+        margin-top: 15px;
+        text-align: center;
+    }
+
+    .login-links {
+        text-align: center;
+        margin-top: 20px;
+        line-height: 2;
+    }
+
+    .login-links a {
+        color: #6c4ce4;
+    }
+
+    .back-home {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        color: #6c4ce4;
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<header>
+    <nav>
+        <a href="index.html">📚 Book Bazaar</a>
+        <a href="index.html">Home</a>
+        <a href="index.html#books">Books</a>
+        <a href="cart.html">🛒 Cart</a>
+    </nav>
+</header>
+
+<main class="login-container">
+    <h1>Welcome Back! 📚</h1>
+    <p class="login-description">
+        Login to your Book Bazaar account.
+    </p>
+
+    <form id="loginForm">
+        <label for="email">Email Address</label>
+        <input
+            type="email"
+            id="email"
+            placeholder="Enter your email"
+            required
+        >
+
+        <label for="password">Password</label>
+        <input
+            type="password"
+            id="password"
+            placeholder="Enter your password"
+            required
+            minlength="6"
+        >
+
+        <button type="submit" class="login-btn">Login</button>
+    </form>
+
+    <p id="loginMessage" class="login-message"></p>
+
+    <div class="login-links">
+        Don't have an account?
+        <a href="register.html">Register here</a>
+    </div>
+
+    <a class="back-home" href="index.html">← Back to Home</a>
+</main>
+
+<script>
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const message = document.getElementById("loginMessage");
+
+        let users = [];
+
+        try {
+            users = JSON.parse(localStorage.getItem("bb_users") || "[]");
+        } catch {
+            users = [];
+        }
+
+        const user = users.find(function(item) {
+            return item.email.toLowerCase() === email.toLowerCase()
+                && item.password === password;
+        });
+
+        if (user) {
+            localStorage.setItem("bb_currentUser", JSON.stringify({
+                name: user.name,
+                email: user.email
+            }));
+
+            message.style.color = "green";
+            message.textContent = "Login successful! Welcome, " + user.name + "!";
+
+            setTimeout(function() {
+                window.location.href = "index.html";
+            }, 1200);
+        } else {
+            message.style.color = "red";
+            message.textContent =
+                "Account not found or password incorrect. Please register first.";
+        }
+    });
+</script>
+```
+
+</body>
+</html>

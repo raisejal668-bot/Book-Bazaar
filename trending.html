@@ -1,0 +1,334 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trending Books | Book Bazaar</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .trending-container {
+            max-width: 1100px;
+            margin: 35px auto;
+            padding: 20px;
+        }
+
+        .trending-hero {
+            text-align: center;
+            background: #5b4bdb;
+            color: white;
+            padding: 35px 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .trending-hero h1 {
+            font-size: 34px;
+            margin-top: 0;
+        }
+
+        .trending-search {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+
+        .trending-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 22px;
+        }
+
+        .trending-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+        }
+
+        .trending-cover {
+            height: 150px;
+            background: #f0edff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
+
+        .trending-badge {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            background: #fff0d8;
+            color: #9a5b00;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .trending-rating {
+            color: #e59a00;
+            font-weight: bold;
+        }
+
+        .trending-price {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .trending-button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 7px;
+            background: #5b4bdb;
+            color: white;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .trending-button:hover {
+            opacity: 0.88;
+        }
+
+        .trending-message {
+            padding: 14px;
+            margin-top: 22px;
+            border-radius: 8px;
+            background: #f3f0ff;
+            text-align: center;
+        }
+
+        .no-books {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+
+        @media (max-width: 600px) {
+            .trending-container {
+                padding: 12px;
+            }
+
+            .trending-hero h1 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="index.html#books">Books</a>
+        <a href="exchange.html">Exchange</a>
+        <a href="assistant.html">Book Assistant</a>
+        <a href="student-tools.html">Student Tools</a>
+        <a href="deals.html">Student Deals</a>
+        <a href="reviews.html">Reviews</a>
+        <a href="cart.html">Cart</a>
+    </nav>
+</header>
+
+<main class="trending-container">
+
+    <section class="trending-hero">
+        <h1>🔥 Trending Books</h1>
+        <p>Explore popular reads for curious and ambitious students.</p>
+        <p>Find your next favourite book today!</p>
+    </section>
+
+    <h2>Popular Picks 📚</h2>
+
+    <input
+        type="search"
+        id="trendingSearch"
+        class="trending-search"
+        placeholder="🔍 Search by book title or author..."
+        aria-label="Search trending books"
+    >
+
+    <div class="trending-grid" id="trendingGrid"></div>
+
+    <p id="noBooks" class="no-books" hidden>No matching books found.</p>
+
+    <div class="trending-message" id="trendingMessage" aria-live="polite">
+        Browse the collection and choose a book.
+    </div>
+
+    <p style="color:#777;font-size:13px;">
+        Note: Trending labels and ratings are illustrative sample data for this project,
+        not live sales statistics or verified customer ratings.
+    </p>
+
+</main>
+
+<script>
+    const trendingBooks = [
+        {
+            id: 1,
+            title: "Python Programming",
+            author: "Programming Series",
+            price: 350,
+            rating: 4.8,
+            emoji: "🐍",
+            badge: "Student Favourite"
+        },
+        {
+            id: 2,
+            title: "Data Structures",
+            author: "Computer Science Series",
+            price: 420,
+            rating: 4.7,
+            emoji: "💻",
+            badge: "Popular Pick"
+        },
+        {
+            id: 3,
+            title: "Database Management",
+            author: "Academic Learning Series",
+            price: 315,
+            rating: 4.6,
+            emoji: "🗄️",
+            badge: "Study Essential"
+        },
+        {
+            id: 4,
+            title: "Web Development",
+            author: "Web Technology Series",
+            price: 385,
+            rating: 4.8,
+            emoji: "🌐",
+            badge: "Trending Now"
+        },
+        {
+            id: 5,
+            title: "Artificial Intelligence",
+            author: "AI Learning Series",
+            price: 490,
+            rating: 4.9,
+            emoji: "🤖",
+            badge: "Popular Pick"
+        },
+        {
+            id: 6,
+            title: "Study and Success",
+            author: "Personal Growth Series",
+            price: 210,
+            rating: 4.5,
+            emoji: "📖",
+            badge: "Budget Friendly"
+        }
+    ];
+
+    const trendingGrid = document.getElementById("trendingGrid");
+    const trendingSearch = document.getElementById("trendingSearch");
+    const trendingMessage = document.getElementById("trendingMessage");
+    const noBooks = document.getElementById("noBooks");
+
+    function displayTrendingBooks() {
+        const query = trendingSearch.value.trim().toLowerCase();
+
+        const filteredBooks = trendingBooks.filter(function (book) {
+            return book.title.toLowerCase().includes(query) ||
+                   book.author.toLowerCase().includes(query);
+        });
+
+        trendingGrid.replaceChildren();
+        noBooks.hidden = filteredBooks.length !== 0;
+
+        filteredBooks.forEach(function (book) {
+            const card = document.createElement("article");
+            card.className = "trending-card";
+
+            const cover = document.createElement("div");
+            cover.className = "trending-cover";
+            cover.textContent = book.emoji;
+
+            const badge = document.createElement("span");
+            badge.className = "trending-badge";
+            badge.textContent = "🔥 " + book.badge;
+
+            const title = document.createElement("h3");
+            title.textContent = book.title;
+
+            const author = document.createElement("p");
+            author.textContent = book.author;
+
+            const rating = document.createElement("p");
+            rating.className = "trending-rating";
+            rating.textContent = "★ " + book.rating + " / 5";
+
+            const price = document.createElement("p");
+            price.className = "trending-price";
+            price.textContent = "₹" + book.price;
+
+            const button = document.createElement("button");
+            button.className = "trending-button";
+            button.textContent = "Add to Cart";
+
+            button.addEventListener("click", function () {
+                addTrendingBookToCart(book);
+            });
+
+            card.append(cover, badge, title, author, rating, price, button);
+            trendingGrid.appendChild(card);
+        });
+    }
+
+    function addTrendingBookToCart(book) {
+        let cart = [];
+
+        try {
+            const saved = JSON.parse(localStorage.getItem("bb_cart") || "[]");
+            cart = Array.isArray(saved) ? saved : [];
+        } catch (error) {
+            trendingMessage.textContent =
+                "Could not read your cart. Please check your browser storage.";
+            return;
+        }
+
+        const existingItem = cart.find(function (item) {
+            return Number(item.id) === book.id;
+        });
+
+        if (existingItem) {
+            existingItem.quantity =
+                Math.max(1, Number(existingItem.quantity) || 1) + 1;
+        } else {
+            cart.push({
+                id: book.id,
+                quantity: 1,
+                title: book.title,
+                price: book.price
+            });
+        }
+
+        try {
+            localStorage.setItem("bb_cart", JSON.stringify(cart));
+            trendingMessage.textContent =
+                book.title + " was added to your cart.";
+        } catch (error) {
+            trendingMessage.textContent =
+                "Could not save your cart. Check your browser storage.";
+        }
+    }
+
+    trendingSearch.addEventListener("input", displayTrendingBooks);
+
+    displayTrendingBooks();
+</script>
+
+</body>
+</html>
+```

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Cart | Book Bazaar</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f8f5ff;
+    color: #302344;
+}
+
+header {
+    background: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    box-shadow: 0 2px 8px #ddd;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+    color: #6d28d9;
+}
+
+nav a {
+    text-decoration: none;
+    color: #302344;
+    margin: 8px;
+    font-weight: bold;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 35px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #716b80;
+}
+
+#cartItems {
+    max-width: 900px;
+    margin: 25px auto;
+    padding: 0 15px;
+}
+
+.cart-item {
+    background: white;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    box-shadow: 0 3px 10px #ddd;
+}
+
+.book-info h3 {
+    margin: 0 0 8px;
+}
+
+.price {
+    color: #6d28d9;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+button {
+    border: none;
+    padding: 11px 15px;
+    border-radius: 7px;
+    cursor: pointer;
+    margin: 4px;
+}
+
+.remove-btn {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.checkout-btn {
+    background: #6d28d9;
+    color: white;
+    font-size: 16px;
+}
+
+#cartSummary {
+    max-width: 900px;
+    margin: 25px auto;
+    padding: 25px;
+    background: white;
+    border-radius: 12px;
+    text-align: right;
+    box-shadow: 0 3px 10px #ddd;
+}
+
+.empty {
+    background: white;
+    border-radius: 12px;
+    padding: 35px 15px;
+    text-align: center;
+}
+
+.empty a {
+    display: inline-block;
+    padding: 12px 18px;
+    background: #6d28d9;
+    color: white;
+    text-decoration: none;
+    border-radius: 7px;
+}
+
+footer {
+    margin-top: 40px;
+    background: #302344;
+    color: white;
+    text-align: center;
+    padding: 25px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">📚 Book Bazaar</div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="books.html">Books</a>
+        <a href="wishlist.html">Wishlist ❤️</a>
+        <a href="cart.html">Cart 🛒</a>
+    </nav>
+</header>
+
+<h1>🛒 My Shopping Cart</h1>
+<p class="subtitle">Your selected books are waiting for you!</p>
+
+<div id="cartItems"></div>
+
+<div id="cartSummary"></div>
+
+<footer>
+    <p>📚 Book Bazaar</p>
+    <p>The Student Book Marketplace</p>
+</footer>
+
+<script>
+function getCart() {
+    try {
+        const data = JSON.parse(localStorage.getItem("cart"));
+        return Array.isArray(data) ? data : [];
+    } catch (error) {
+        return [];
+    }
+}
+
+function saveCart(cart) {
+    localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+function displayCart() {
+    const container = document.getElementById("cartItems");
+    const summary = document.getElementById("cartSummary");
+    const cart = getCart();
+
+    container.innerHTML = "";
+    summary.innerHTML = "";
+
+    if (cart.length === 0) {
+        container.innerHTML = `
+            <div class="empty">
+                <h2>Your cart is empty! 📚</h2>
+                <p>Visit the homepage and add some books.</p>
+                <a href="index.html">Explore Books</a>
+            </div>
+        `;
+        return;
+    }
+
+    let total = 0;
+
+    cart.forEach(function(book, index) {
+        const price = Number(book.price) || 0;
+        const quantity = Math.max(1, Number(book.quantity) || 1);
+        total += price * quantity;
+
+        const item = document.createElement("div");
+        item.className = "cart-item";
+
+        const info = document.createElement("div");
+        info.className = "book-info";
+
+        const title = document.createElement("h3");
+        title.textContent = "📖 " + (book.title || "Book");
+
+        const priceText = document.createElement("p");
+        priceText.className = "price";
+        priceText.textContent = "₹" + price + " × " + quantity;
+
+        const quantityText = document.createElement("p");
+        quantityText.textContent = "Subtotal: ₹" + (price * quantity);
+
+        info.append(title, priceText, quantityText);
+
+        const actions = document.createElement("div");
+
+        const minus = document.createElement("button");
+        minus.textContent = "−";
+        minus.setAttribute("aria-label", "Decrease quantity");
+        minus.onclick = function() {
+            changeQuantity(index, -1);
+        };
+
+        const plus = document.createElement("button");
+        plus.textContent = "+";
+        plus.setAttribute("aria-label", "Increase quantity");
+        plus.onclick = function() {
+            changeQuantity(index, 1);
+        };
+
+        const remove = document.createElement("button");
+        remove.className = "remove-btn";
+        remove.textContent = "Remove";
+        remove.onclick = function() {
+            removeItem(index);
+        };
+
+        actions.append(minus, plus, remove);
+        item.append(info, actions);
+        container.appendChild(item);
+    });
+
+    summary.innerHTML = `
+        <h2>Total: ₹${total}</h2>
+        <button class="checkout-btn" onclick="checkout()">
+            Proceed to Checkout
+        </button>
+    `;
+}
+
+function changeQuantity(index, change) {
+    const cart = getCart();
+
+    if (!cart[index]) return;
+
+    const quantity = Math.max(1, Number(cart[index].quantity) || 1);
+    cart[index].quantity = quantity + change;
+
+    saveCart(cart);
+    displayCart();
+}
+
+function removeItem(index) {
+    const cart = getCart();
+    cart.splice(index, 1);
+
+    saveCart(cart);
+    displayCart();
+}
+
+function checkout() {
+    const cart = getCart();
+
+    if (cart.length === 0) {
+        alert("Your cart is empty! Please add a book first.");
+        return;
+    }
+
+    window.location.href = "checkout.html";
+
+}
+
+displayCart();
+</script>
+
+</body>
+</html>
+

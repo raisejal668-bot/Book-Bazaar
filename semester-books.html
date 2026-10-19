@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semester Books | Book Bazaar</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f7f5ff;
+    color: #29213d;
+}
+
+header {
+    background: #6c3bd1;
+    color: white;
+    padding: 22px 7%;
+}
+
+header h1 {
+    margin: 0 0 15px;
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    max-width: 1150px;
+    margin: auto;
+    padding: 25px 18px;
+}
+
+.filters {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    box-shadow: 0 3px 12px #0000000d;
+}
+
+select, input, button {
+    padding: 11px;
+    border-radius: 7px;
+    border: 1px solid #ccc;
+    margin: 5px;
+    font-size: 15px;
+}
+
+button {
+    cursor: pointer;
+    background: #6c3bd1;
+    color: white;
+    border: none;
+}
+
+button:hover {
+    background: #4e24a7;
+}
+
+.book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.book-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 3px 12px #0000000d;
+}
+
+.book-cover {
+    background: #eee6ff;
+    min-height: 135px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #6031b8;
+}
+
+.book-card h3 {
+    margin-bottom: 8px;
+}
+
+.price {
+    font-weight: bold;
+    color: #6332bd;
+}
+
+.book-card button {
+    width: 100%;
+    margin: 5px 0;
+}
+
+.secondary {
+    background: #eee6ff;
+    color: #4e24a7;
+}
+
+.secondary:hover {
+    background: #dfd0ff;
+}
+
+.reader {
+    display: none;
+    background: white;
+    padding: 25px;
+    margin-top: 30px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px #0000000d;
+    line-height: 1.8;
+}
+
+.reader h2 {
+    color: #6332bd;
+}
+
+.reader-content {
+    white-space: pre-wrap;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    background: #eee6ff;
+    margin-top: 35px;
+}
+
+@media (max-width: 600px) {
+    header {
+        padding: 20px;
+    }
+
+    nav {
+        gap: 12px;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+    <h1>📚 Book Bazaar</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="books.html">All Books</a>
+        <a href="semester-books.html">Semester Books</a>
+        <a href="wishlist.html">Wishlist</a>
+        <a href="cart.html">Cart</a>
+    </nav>
+</header>
+
+<main class="container">
+
+```
+<h2>Semester-wise Computer Science Books 🎓</h2>
+<p>Select your year and semester to find books. Click <b>Read Book</b> to open the available study notes.</p>
+
+<section class="filters">
+    <label for="year">Year:</label>
+    <select id="year">
+        <option value="all">All Years</option>
+        <option value="First Year">First Year</option>
+        <option value="Second Year">Second Year</option>
+        <option value="Third Year">Third Year</option>
+    </select>
+
+    <label for="semester">Semester:</label>
+    <select id="semester">
+        <option value="all">All Semesters</option>
+        <option value="1">Semester 1</option>
+        <option value="2">Semester 2</option>
+        <option value="3">Semester 3</option>
+        <option value="4">Semester 4</option>
+        <option value="5">Semester 5</option>
+        <option value="6">Semester 6</option>
+    </select>
+
+    <input id="search" type="text" placeholder="Search by book or subject...">
+
+    <button onclick="showBooks()">Find Books</button>
+</section>
+
+<p id="resultCount"></p>
+<section class="book-grid" id="bookGrid"></section>
+
+<section class="reader" id="reader">
+    <button onclick="closeReader()">✖ Close Reader</button>
+    <h2 id="readerTitle"></h2>
+    <p id="readerSubject"></p>
+    <hr>
+    <div class="reader-content" id="readerContent"></div>
+    <p><b>Note:</b> These are sample learning notes, not a complete textbook.</p>
+</section>
+```
+
+</main>
+
+<footer>
+    © 2026 Book Bazaar | Learn, Read and Grow 📖
+</footer>
+
+<script>
+const books = [
+    {
+        id: 1,
+        title: "Introduction to Programming",
+        subject: "Programming",
+        year: "First Year",
+        semester: 1,
+        price: 199,
+        notes: `INTRODUCTION TO PROGRAMMING
+
+Programming means giving instructions to a computer to perform a task.
+
+Important concepts:
+
+1. Algorithm
+An algorithm is a step-by-step procedure used to solve a problem.
+
+2. Variables
+Variables store values that a program can use.
+
+3. Data Types
+Data types describe the kind of value stored, such as integers, decimal numbers, and text.
+
+4. Conditions
+Conditions allow a program to make decisions using if and else statements.
+
+5. Loops
+Loops repeat instructions until a condition is met.
+
+Example in Python:
+
+name = input("Enter your name: ")
+print("Hello", name)
+
+Practice:
+Write a program that adds two numbers.`
+    },
+    {
+        id: 2,
+        title: "Mathematics for Computer Science",
+        subject: "Mathematics",
+        year: "First Year",
+        semester: 2,
+        price: 249,
+        notes: `MATHEMATICS FOR COMPUTER SCIENCE
+
+Mathematics helps solve computational problems.
+
+Important topics:
+
+1. Sets
+A set is a collection of distinct objects.
+
+Example:
+A = {1, 2, 3}
+
+2. Relations
+A relation describes a connection between elements of sets.
+
+3. Functions
+A function maps each input to exactly one output.
+
+4. Logic
+Propositional logic uses statements that are either true or false.
+
+5. Graphs
+A graph contains vertices and edges connecting them.
+
+Practice:
+Let A = {1, 2, 3} and B = {2, 3, 4}.
+Find A union B and A intersection B.`
+    },
+    {
+        id: 3,
+        title: "Data Structures",
+        subject: "Data Structures",
+        year: "Second Year",
+        semester: 3,
+        price: 299,
+        notes: `DATA STRUCTURES
+
+A data structure organizes data so it can be used efficiently.
+
+Important topics:
+
+1. Arrays
+Arrays store elements in an ordered collection.
+
+2. Linked Lists
+Linked lists contain nodes connected using links.
+
+3. Stacks
+A stack follows LIFO: Last In, First Out.
+
+4. Queues
+A queue follows FIFO: First In, First Out.
+
+5. Searching
+Linear search checks elements one by one.
+
+6. Sorting
+Sorting arranges data in a particular order.
+
+Practice:
+Explain the difference between a stack and a queue.`
+    },
+    {
+        id: 4,
+        title: "Database Management Systems",
+        subject: "DBMS",
+        year: "Second Year",
+        semester: 4,
+        price: 299,
+        notes: `DATABASE MANAGEMENT SYSTEMS
+
+A DBMS is software used to store, organize, and retrieve data.
+
+Important topics:
+
+1. Tables
+Tables contain rows and columns.
+
+2. Primary Key
+A primary key uniquely identifies each record.
+
+3. Foreign Key
+A foreign key connects related tables.
+
+4. SQL
+SQL is used to communicate with relational databases.
+
+Example:
+
+SELECT * FROM Students;
+
+This query retrieves all records from the Students table.
+
+5. Normalization
+Normalization organizes database tables to reduce unnecessary duplication.
+
+Practice:
+Write an SQL query to display students whose marks are greater than 70.`
+    },
+    {
+        id: 5,
+        title: "Artificial Intelligence",
+        subject: "AI",
+        year: "Third Year",
+        semester: 5,
+        price: 349,
+        notes: `ARTIFICIAL INTELLIGENCE
+
+Artificial Intelligence (AI) involves creating systems that perform tasks requiring abilities associated with human intelligence.
+
+Important topics:
+
+1. Intelligent Agents
+An agent observes its environment and takes actions.
+
+2. Search
+Search algorithms explore possible solutions to a problem.
+
+3. Knowledge Representation
+Knowledge representation stores information in a form a system can use.
+
+4. Machine Learning
+Machine learning enables systems to learn patterns from data.
+
+5. Applications
+AI is used in recommendation systems, language tools, and image recognition.
+
+Practice:
+Explain the difference between Artificial Intelligence and Machine Learning.`
+    },
+    {
+        id: 6,
+        title: "Cyber and Information Security",
+        subject: "Cyber Security",
+        year: "Third Year",
+        semester: 6,
+        price: 349,
+        notes: `CYBER AND INFORMATION SECURITY
+
+Cybersecurity protects computer systems, networks, and information from unauthorized access or attacks.
+
+Important topics:
+
+1. Confidentiality
+Information should only be accessible to authorized people.
+
+2. Integrity
+Information should remain accurate and unaltered without authorization.
+
+3. Availability
+Systems and information should be accessible when needed.
+
+4. Authentication
+Authentication verifies a user's identity.
+
+5. Encryption
+Encryption transforms readable information into an encoded form.
+
+6. Digital Signatures
+Digital signatures help verify the authenticity and integrity of digital messages.
+
+Practice:
+Explain the three goals of information security.`
+    }
+];
+
+function showBooks() {
+    const year = document.getElementById("year").value;
+    const semester = document.getElementById("semester").value;
+    const search = document.getElementById("search").value.toLowerCase().trim();
+
+    const filtered = books.filter(book => {
+        const yearMatch = year === "all" || book.year === year;
+        const semesterMatch = semester === "all" || String(book.semester) === semester;
+        const searchMatch =
+            book.title.toLowerCase().includes(search) ||
+            book.subject.toLowerCase().includes(search);
+
+        return yearMatch && semesterMatch && searchMatch;
+    });
+
+    const grid = document.getElementById("bookGrid");
+    grid.innerHTML = "";
+
+    document.getElementById("resultCount").textContent =
+        filtered.length + (filtered.length === 1 ? " book found." : " books found.");
+
+    if (filtered.length === 0) {
+        grid.innerHTML = "<p>No matching books found. Try another semester or search.</p>";
+        return;
+    }
+
+    filtered.forEach(book => {
+        const card = document.createElement("article");
+        card.className = "book-card";
+
+        card.innerHTML = `
+            <div class="book-cover">📘<br>${book.title}</div>
+            <h3>${book.title}</h3>
+            <p><b>Subject:</b> ${book.subject}</p>
+            <p><b>Year:</b> ${book.year}</p>
+            <p><b>Semester:</b> ${book.semester}</p>
+            <p class="price">₹${book.price}</p>
+            <button onclick="readBook(${book.id})">📖 Read Book</button>
+            <button class="secondary" onclick="addToCart(${book.id})">🛒 Add to Cart</button>
+        `;
+
+        grid.appendChild(card);
+    });
+}
+
+function readBook(id) {
+    const book = books.find(item => item.id === id);
+
+    if (!book) {
+        alert("Sorry, this book could not be found.");
+        return;
+    }
+
+    document.getElementById("readerTitle").textContent = book.title;
+    document.getElementById("readerSubject").textContent =
+        book.year + " • Semester " + book.semester + " • " + book.subject;
+    document.getElementById("readerContent").textContent = book.notes;
+
+    const reader = document.getElementById("reader");
+    reader.style.display = "block";
+    reader.scrollIntoView({ behavior: "smooth" });
+}
+
+function closeReader() {
+    document.getElementById("reader").style.display = "none";
+}
+
+function addToCart(id) {
+    const book = books.find(item => item.id === id);
+
+    if (!book) return;
+
+    let cart = [];
+
+    try {
+        cart = JSON.parse(localStorage.getItem("cart")) || [];
+        if (!Array.isArray(cart)) cart = [];
+    } catch (error) {
+        cart = [];
+    }
+
+    const existing = cart.find(item => String(item.id) === String(book.id));
+
+    if (existing) {
+        existing.quantity = (Number(existing.quantity) || 1) + 1;
+    } else {
+        cart.push({
+            id: book.id,
+            title: book.title,
+            price: book.price,
+            quantity: 1
+        });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert(book.title + " added to your cart!");
+}
+
+document.getElementById("search").addEventListener("input", showBooks);
+document.getElementById("year").addEventListener("change", showBooks);
+document.getElementById("semester").addEventListener("change", showBooks);
+
+showBooks();
+</script>
+
+</body>
+</html>

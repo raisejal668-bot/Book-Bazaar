@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Reviews | Book Bazaar</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .reviews-container {
+            max-width: 1000px;
+            margin: 35px auto;
+            padding: 20px;
+        }
+
+        .reviews-hero {
+            background: #5b4bdb;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 14px;
+            margin-bottom: 25px;
+        }
+
+        .reviews-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+
+        .review-panel {
+            background: white;
+            border-radius: 12px;
+            padding: 22px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+        }
+
+        .review-panel label {
+            display: block;
+            font-weight: bold;
+            margin: 15px 0 7px;
+        }
+
+        .review-panel input,
+        .review-panel select,
+        .review-panel textarea {
+            width: 100%;
+            padding: 11px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font: inherit;
+        }
+
+        .review-panel textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .stars-input {
+            display: flex;
+            gap: 8px;
+            margin: 10px 0;
+        }
+
+        .star-button {
+            border: none;
+            background: transparent;
+            font-size: 32px;
+            cursor: pointer;
+            color: #bbb;
+            padding: 0;
+        }
+
+        .star-button.selected {
+            color: #f5a623;
+        }
+
+        .review-button {
+            width: 100%;
+            border: none;
+            border-radius: 7px;
+            padding: 12px;
+            margin-top: 15px;
+            background: #5b4bdb;
+            color: white;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .review-button:hover {
+            opacity: 0.88;
+        }
+
+        .review-card {
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 16px;
+            margin: 15px 0;
+            overflow-wrap: anywhere;
+        }
+
+        .review-card h3 {
+            margin: 0 0 8px;
+        }
+
+        .review-stars {
+            color: #f5a623;
+            font-size: 20px;
+            letter-spacing: 2px;
+        }
+
+        .review-meta {
+            font-size: 13px;
+            color: #777;
+        }
+
+        .delete-button {
+            border: none;
+            background: #e74c3c;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .review-message {
+            padding: 12px;
+            border-radius: 7px;
+            background: #f3f0ff;
+            margin-top: 15px;
+        }
+
+        .empty-message {
+            color: #666;
+            padding: 15px 0;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 18px;
+            text-decoration: none;
+        }
+
+        @media (max-width: 700px) {
+            .reviews-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .reviews-container {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="index.html#books">Books</a>
+        <a href="exchange.html">Exchange</a>
+        <a href="assistant.html">Book Assistant</a>
+        <a href="student-tools.html">Student Tools</a>
+        <a href="deals.html">Student Deals</a>
+        <a href="faq.html">FAQs</a>
+        <a href="cart.html">Cart</a>
+    </nav>
+</header>
+
+<main class="reviews-container">
+
+    <a href="index.html" class="back-link">← Back to Home</a>
+
+    <section class="reviews-hero">
+        <h1>⭐ Book Reviews & Ratings</h1>
+        <p>Share your reading experience and help other students discover books.</p>
+    </section>
+
+    <div class="reviews-layout">
+
+        <section class="review-panel">
+            <h2>Write a Review ✍️</h2>
+
+            <form id="reviewForm">
+                <label for="reviewerName">Your name</label>
+                <input
+                    type="text"
+                    id="reviewerName"
+                    maxlength="50"
+                    placeholder="Enter your name"
+                    required
+                >
+
+                <label for="bookSelect">Select a book</label>
+                <select id="bookSelect" required>
+                    <option value="">Choose a book</option>
+                    <option value="Python Programming">Python Programming</option>
+                    <option value="Data Structures">Data Structures</option>
+                    <option value="Database Management">Database Management</option>
+                    <option value="Web Development">Web Development</option>
+                    <option value="Artificial Intelligence">Artificial Intelligence</option>
+                    <option value="Study and Success">Study and Success</option>
+                    <option value="Fiction Novel">Fiction Novel</option>
+                    <option value="Other">Other book</option>
+                </select>
+
+                <div id="otherBookWrapper" hidden>
+                    <label for="otherBook">Book title</label>
+                    <input
+                        type="text"
+                        id="otherBook"
+                        maxlength="100"
+                        placeholder="Enter the book title"
+                    >
+                </div>
+
+                <label>Choose your rating</label>
+
+                <div class="stars-input" id="starsInput" role="group" aria-label="Book rating">
+                    <button type="button" class="star-button" data-rating="1" aria-label="1 star">★</button>
+                    <button type="button" class="star-button" data-rating="2" aria-label="2 stars">★</button>
+                    <button type="button" class="star-button" data-rating="3" aria-label="3 stars">★</button>
+                    <button type="button" class="star-button" data-rating="4" aria-label="4 stars">★</button>
+                    <button type="button" class="star-button" data-rating="5" aria-label="5 stars">★</button>
+                </div>
+
+                <p id="ratingMessage">No rating selected.</p>
+
+                <label for="reviewText">Your review</label>
+                <textarea
+                    id="reviewText"
+                    maxlength="1000"
+                    placeholder="What did you think about this book?"
+                    required
+                ></textarea>
+
+                <button type="submit" class="review-button">Submit Review</button>
+            </form>
+
+            <div class="review-message" id="formMessage" aria-live="polite">
+                Your review will be saved in this browser.
+            </div>
+        </section>
+
+        <section class="review-panel">
+            <h2>Reader Reviews 📖</h2>
+
+            <label for="filterBook">Filter by book</label>
+            <select id="filterBook">
+                <option value="all">All books</option>
+                <option value="Python Programming">Python Programming</option>
+                <option value="Data Structures">Data Structures</option>
+                <option value="Database Management">Database Management</option>
+                <option value="Web Development">Web Development</option>
+                <option value="Artificial Intelligence">Artificial Intelligence</option>
+                <option value="Study and Success">Study and Success</option>
+                <option value="Fiction Novel">Fiction Novel</option>
+                <option value="Other">Other book</option>
+            </select>
+
+            <div id="reviewSummary" class="review-message"></div>
+            <div id="reviewsList"></div>
+        </section>
+
+    </div>
+
+    <p class="review-meta">
+        Demo notice: Reviews are stored in this browser only and are not shared online.
+        Names are not verified, and this page does not have a real user-account system.
+    </p>
+
+</main>
+
+<script>
+    const STORAGE_KEY = "bb_book_reviews";
+
+    let selectedRating = 0;
+
+    const reviewForm = document.getElementById("reviewForm");
+    const ratingButtons = document.querySelectorAll(".star-button");
+    const ratingMessage = document.getElementById("ratingMessage");
+    const bookSelect = document.getElementById("bookSelect");
+    const otherBookWrapper = document.getElementById("otherBookWrapper");
+    const otherBookInput = document.getElementById("otherBook");
+    const formMessage = document.getElementById("formMessage");
+    const reviewsList = document.getElementById("reviewsList");
+    const filterBook = document.getElementById("filterBook");
+    const reviewSummary = document.getElementById("reviewSummary");
+
+    function getReviews() {
+        try {
+            const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+
+            if (!Array.isArray(saved)) {
+                return [];
+            }
+
+            return saved.filter(function (review) {
+                return review &&
+                    typeof review.id === "string" &&
+                    typeof review.name === "string" &&
+                    typeof review.book === "string" &&
+                    typeof review.text === "string" &&
+                    Number.isInteger(review.rating) &&
+                    review.rating >= 1 &&
+                    review.rating <= 5;
+            });
+        } catch (error) {
+            return [];
+        }
+    }
+
+    function saveReviews(reviews) {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
+            return true;
+        } catch (error) {
+            formMessage.textContent =
+                "Unable to save reviews. Check your browser storage.";
+            return false;
+        }
+    }
+
+    function updateStars() {
+        ratingButtons.forEach(function (button) {
+            const rating = Number(button.dataset.rating);
+            const selected = rating <= selectedRating;
+
+            button.classList.toggle("selected", selected);
+            button.setAttribute("aria-pressed", String(rating === selectedRating));
+        });
+
+        ratingMessage.textContent = selectedRating
+            ? selectedRating + " out of 5 stars selected."
+            : "No rating selected.";
+    }
+
+    ratingButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            selectedRating = Number(button.dataset.rating);
+            updateStars();
+        });
+    });
+
+    bookSelect.addEventListener("change", function () {
+        const isOther = bookSelect.value === "Other";
+
+        otherBookWrapper.hidden = !isOther;
+        otherBookInput.required = isOther;
+    });
+
+    reviewForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const name = document.getElementById("reviewerName").value.trim();
+        const selectedBook = bookSelect.value;
+        const otherBook = otherBookInput.value.trim();
+        const text = document.getElementById("reviewText").value.trim();
+
+        if (!name || !selectedBook || !text) {
+            formMessage.textContent = "Please complete all required fields.";
+            return;
+        }
+
+        if (selectedRating < 1 || selectedRating > 5) {
+            formMessage.textContent = "Please select a rating from 1 to 5 stars.";
+            return;
+        }
+
+        if (selectedBook === "Other" && !otherBook) {
+            formMessage.textContent = "Please enter the book title.";
+            return;
+        }
+
+        const bookTitle = selectedBook === "Other" ? otherBook : selectedBook;
+
+        const review = {
+            id: Date.now().toString() + "-" + Math.random().toString(36).slice(2),
+            name: name,
+            book: bookTitle,
+            category: selectedBook,
+            rating: selectedRating,
+            text: text,
+            date: new Date().toLocaleDateString()
+        };
+
+        const reviews = getReviews();
+        reviews.unshift(review);
+
+        if (saveReviews(reviews)) {
+            reviewForm.reset();
+            selectedRating = 0;
+            updateStars();
+            otherBookWrapper.hidden = true;
+            otherBookInput.required = false;
+            filterBook.value = "all";
+
+            formMessage.textContent = "Your review was saved successfully! ⭐";
+            displayReviews();
+        }
+    });
+
+    function displayReviews() {
+        const reviews = getReviews();
+        const filter = filterBook.value;
+
+        const filteredReviews = filter === "all"
+            ? reviews
+            : reviews.filter(function (review) {
+                return review.category === filter;
+            });
+
+        reviewsList.replaceChildren();
+
+        if (filteredReviews.length === 0) {
+            const empty = document.createElement("p");
+            empty.className = "empty-message";
+            empty.textContent = "No reviews found. Be the first to write one!";
+            reviewsList.appendChild(empty);
+        }
+
+        filteredReviews.forEach(function (review) {
+            const card = document.createElement("article");
+            card.className = "review-card";
+
+            const title = document.createElement("h3");
+            title.textContent = review.book;
+
+            const stars = document.createElement("div");
+            stars.className = "review-stars";
+            stars.textContent = "★".repeat(review.rating) +
+                "☆".repeat(5 - review.rating);
+            stars.setAttribute("aria-label", review.rating + " out of 5 stars");
+
+            const meta = document.createElement("p");
+            meta.className = "review-meta";
+            meta.textContent = "By " + review.name + " • " + (review.date || "");
+
+            const body = document.createElement("p");
+            body.textContent = review.text;
+
+            const deleteButton = document.createElement("button");
+            deleteButton.className = "delete-button";
+            deleteButton.textContent = "Delete Review";
+            deleteButton.type = "button";
+
+            deleteButton.addEventListener("click", function () {
+                const updated = getReviews().filter(function (item) {

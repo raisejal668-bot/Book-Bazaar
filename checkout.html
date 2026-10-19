@@ -1,0 +1,462 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout | Book Bazaar</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f8f5ff;
+    color: #302344;
+}
+
+header {
+    background: #6d28d9;
+    color: white;
+    padding: 20px 7%;
+}
+
+header h1 {
+    margin: 0 0 15px;
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 850px;
+    margin: 30px auto;
+    padding: 0 16px;
+}
+
+.box {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 12px #ddd;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+input:not([type="radio"]), textarea {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-top: 7px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    font-size: 15px;
+}
+
+.payment-option {
+    border: 1px solid #ddd;
+    padding: 16px;
+    border-radius: 9px;
+    margin: 12px 0;
+}
+
+.payment-option label {
+    margin: 0;
+    cursor: pointer;
+}
+
+.payment-option input {
+    margin-right: 8px;
+}
+
+.note {
+    font-size: 14px;
+    color: #716b80;
+    line-height: 1.6;
+}
+
+.book-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 13px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.total {
+    font-size: 23px;
+    font-weight: bold;
+    color: #6d28d9;
+}
+
+button {
+    border: none;
+    border-radius: 8px;
+    padding: 14px 20px;
+    margin-top: 15px;
+    background: #6d28d9;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #4c1d95;
+}
+
+#message {
+    display: none;
+    padding: 15px;
+    margin-top: 18px;
+    border-radius: 8px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.success {
+    display: block !important;
+    background: #e5f8e9;
+    color: #17652b;
+}
+
+.error {
+    display: block !important;
+    background: #fff0f0;
+    color: #a22222;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    margin-top: 30px;
+}
+
+@media(max-width: 550px) {
+    .box {
+        padding: 17px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>📚 Book Bazaar</h1>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="books.html">Books</a>
+        <a href="semester-books.html">Semester Books</a>
+        <a href="wishlist.html">Wishlist</a>
+        <a href="cart.html">Cart 🛒</a>
+    </nav>
+</header>
+
+<main class="container">
+
+    <h2>🛍️ Checkout</h2>
+    <p>Complete your order and get your books delivered!</p>
+
+    <section class="box">
+        <h3>1. Delivery Details</h3>
+
+        <form id="checkoutForm">
+            <label for="name">Full Name</label>
+            <input id="name" required
+                   placeholder="Enter your full name">
+
+            <label for="email">Email Address</label>
+            <input id="email" type="email" required
+                   placeholder="Enter your email">
+
+            <label for="phone">Phone Number</label>
+            <input id="phone" type="tel"
+                   pattern="[0-9]{10}" maxlength="10"
+                   required placeholder="10-digit phone number">
+
+            <label for="address">Delivery Address</label>
+            <textarea id="address" rows="3" required
+                      placeholder="House number, street, city, PIN code"></textarea>
+        </form>
+    </section>
+
+    <section class="box">
+        <h3>2. Order Summary</h3>
+
+        <div id="orderItems"></div>
+
+        <p id="emptyMessage" class="note" style="display:none;">
+            Your cart is empty. Please return to the books page
+            and add a book before checkout.
+        </p>
+
+        <hr>
+
+        <p class="total">
+            Total: ₹<span id="grandTotal">0.00</span>
+        </p>
+    </section>
+
+    <section class="box">
+        <h3>3. Choose Payment Method</h3>
+
+        <div class="payment-option">
+            <label>
+                <input type="radio" name="payment" value="upi">
+                📱 UPI Payment
+            </label>
+
+            <p class="note">
+                Pay using a supported UPI app. Online payment
+                must be properly configured before accepting
+                real payments.
+            </p>
+        </div>
+
+        <div class="payment-option">
+            <label>
+                <input type="radio" name="payment" value="cod" checked>
+                💵 Cash on Delivery
+            </label>
+
+            <p class="note">
+                Pay when your books are delivered.
+            </p>
+        </div>
+
+        <button type="button" id="placeOrderButton">
+            Place Order
+        </button>
+
+        <div id="message" role="status" aria-live="polite"></div>
+    </section>
+
+</main>
+
+<footer>
+    © 2026 Book Bazaar | Happy Reading 💜
+</footer>
+
+<script>
+"use strict";
+
+let cart = [];
+
+function readCart() {
+    try {
+        const savedCart = localStorage.getItem("cart");
+
+        if (!savedCart) {
+            return [];
+        }
+
+        const parsedCart = JSON.parse(savedCart);
+
+        if (!Array.isArray(parsedCart)) {
+            return [];
+        }
+
+        return parsedCart
+            .filter(book => book && typeof book === "object")
+            .map(book => ({
+                id: book.id ?? null,
+                title: String(book.title || book.name || "Book"),
+                price: Number(book.price ?? book.amount ?? book.cost) || 0,
+                quantity: Math.max(1, parseInt(book.quantity, 10) || 1)
+            }));
+    } catch (error) {
+        console.error("Could not read cart:", error);
+        return [];
+    }
+}
+
+function calculateTotal() {
+    return cart.reduce((sum, book) => {
+        return sum + book.price * book.quantity;
+    }, 0);
+}
+
+function showMessage(text, type) {
+    const message = document.getElementById("message");
+
+    message.className = type;
+    message.textContent = text;
+}
+
+function displayOrder() {
+    cart = readCart();
+
+    const orderItems = document.getElementById("orderItems");
+    const emptyMessage = document.getElementById("emptyMessage");
+
+    orderItems.innerHTML = "";
+
+    if (cart.length === 0) {
+        emptyMessage.style.display = "block";
+        document.getElementById("grandTotal").textContent = "0.00";
+        document.getElementById("placeOrderButton").disabled = true;
+        return;
+    }
+
+    emptyMessage.style.display = "none";
+    document.getElementById("placeOrderButton").disabled = false;
+
+    cart.forEach(book => {
+        const row = document.createElement("div");
+        row.className = "book-row";
+
+        const details = document.createElement("span");
+        details.textContent =
+            book.title + " × " + book.quantity +
+            " (₹" + book.price.toFixed(2) + " each)";
+
+        const subtotal = document.createElement("strong");
+        subtotal.textContent =
+            "₹" + (book.price * book.quantity).toFixed(2);
+
+        row.appendChild(details);
+        row.appendChild(subtotal);
+
+        orderItems.appendChild(row);
+    });
+
+    document.getElementById("grandTotal").textContent =
+        calculateTotal().toFixed(2);
+
+    console.log("Checkout cart:", cart);
+    console.log("Checkout total:", calculateTotal());
+}
+
+function getSavedOrders() {
+    try {
+        const saved = JSON.parse(
+            localStorage.getItem("bookBazaarOrders") || "[]"
+        );
+
+        return Array.isArray(saved) ? saved : [];
+    } catch (error) {
+        return [];
+    }
+}
+
+function placeOrder() {
+    cart = readCart();
+
+    if (cart.length === 0) {
+        showMessage(
+            "Your cart is empty. Please add a book first.",
+            "error"
+        );
+        return;
+    }
+
+    const form = document.getElementById("checkoutForm");
+
+    if (!form.reportValidity()) {
+        return;
+    }
+
+    const selectedPayment =
+        document.querySelector('input[name="payment"]:checked');
+
+    if (!selectedPayment) {
+        showMessage("Please select a payment method.", "error");
+        return;
+    }
+
+    if (selectedPayment.value === "upi") {
+        showMessage(
+            "UPI payment has not been connected yet. " +
+            "Please select Cash on Delivery for now. " +
+            "Do not consider an order paid until a real payment " +
+            "integration verifies the transaction.",
+            "error"
+        );
+        return;
+    }
+
+    const total = calculateTotal();
+
+    const order = {
+        orderId: "BB" + Date.now(),
+        customerName: document.getElementById("name").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        address: document.getElementById("address").value.trim(),
+        paymentMethod: "Cash on Delivery",
+        paymentStatus: "Pay on delivery",
+        orderStatus: "Pending confirmation",
+        total: total,
+        items: cart.map(book => ({
+            id: book.id,
+            title: book.title,
+            price: book.price,
+            quantity: book.quantity
+        })),
+        date: new Date().toLocaleString()
+    };
+
+    try {
+        const orders = getSavedOrders();
+
+        orders.push(order);
+
+        localStorage.setItem(
+            "bookBazaarOrders",
+            JSON.stringify(orders)
+        );
+
+        localStorage.removeItem("cart");
+
+        cart = [];
+        displayOrder();
+        form.reset();
+
+        showMessage(
+            "🎉 Your order has been saved! Order ID: " +
+            order.orderId +
+            ". Total: ₹" + total.toFixed(2) +
+            ". Payment is due on delivery.",
+            "success"
+        );
+
+    } catch (error) {
+        console.error("Could not save order:", error);
+
+        showMessage(
+            "We could not save your order in this browser. " +
+            "Please try again.",
+            "error"
+        );
+    }
+}
+
+document.getElementById("placeOrderButton")
+    .addEventListener("click", placeOrder);
+
+displayOrder();
+</script>
+
+</body>
+</html>
+
